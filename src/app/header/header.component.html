@@ -1,34 +1,38 @@
-<nav class="navbar navbar-expand-lg py-2 bg-light fixed-top " style="z-index: 1;">
-    <div class="container" style="padding-top: 30px; ">
-
-        <ul class="nav nav-pills" style="display: flex; gap: 20px; list-style: none; padding-left: 0;">
-            <li class="nav-item">
-            <a class="nav-link" [ngClass]="{ 'active-link': activeLink === 'temples' }"
-                (click)="navigateTotemples()">Temples</a>
-            </li>
-        
-            <li class="nav-item">
-            <a class="nav-link"
-                [ngClass]="{ 'active-link': activeLink === 'goshalas' }"
-                (click)="navigategoshala()">Goshalas</a>
-            </li>
-        
-            <li class="nav-item">
-            <a class="nav-link"
-                [ngClass]="{ 'active-link': activeLink === 'events' }"
-                (click)="navigateevents()">Events</a>
-            </li>
-        
-            <li class="nav-item">
-            <a class="nav-link"
-                [ngClass]="{ 'active-link': activeLink === 'villages' }"
-                (click)="navigatevillages()">Villages</a>
-            </li>
-        </ul>
-
-        <button (click)="signup()">
-            Signup
-        </button>
+<nav class="navbar navbar-expand-lg py-2 bg-light fixed-top" style="z-index: 1;">
+    <div class="container" style="padding-top: 30px;">
+  
+      <!-- Tabs -->
+      <ul class="nav nav-tabs " style="gap: 20px; list-style: none; padding-left: 0; ">
+        <li class="nav-item">
+          <a class="nav-link "
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'temples' }"
+             (click)="navigateTotemples()">Temples</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link"
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'goshalas' }"
+             (click)="navigategoshala()">Goshalas</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link"
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'events' }"
+             (click)="navigateevents()">Events</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link"
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'villages' }"
+             (click)="navigatevillages()">Villages</a>
+        </li>
+      </ul>
+  
+      <!-- Signup Button -->
+      <button class="btn btn-primary ms-auto" (click)="signup()">
+        Signup
+      </button>
     </div>
-</nav>
+  </nav>
+  
   

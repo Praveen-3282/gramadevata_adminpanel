@@ -13,4 +13,22 @@ export class TempleService {
    getalltemples():Observable<any>{
     return this.httpclient.get(URL+"temple")
   }
+
+  getbytemple(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"templeget/_id/"+ _id)
+  }
+
+  getallcategories(): Observable<any>{
+    return this .httpclient.get(URL+ "templeCategeory")
+  }
+
+  filterTemple(categoryId:string, locationId: string, page: number = 1): Observable<any>{
+    return this.httpclient.get(`${URL}locationByTemples/`,{
+      params: {
+        category: categoryId,
+        input_value: locationId,
+        page: page.toString(),
+      }
+    })
+  }
 }

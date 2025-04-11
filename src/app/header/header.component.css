@@ -1,6 +1,7 @@
-.active-link {
-    
-    color: orange !important;
-    border-radius: 5px;
+
+  .custom-active-tab {
+    background-color: orange !important;
+    color: white !important;
+    border-color: orange !important;
   }
   
