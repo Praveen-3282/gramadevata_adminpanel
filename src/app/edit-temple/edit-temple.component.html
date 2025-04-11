@@ -1,0 +1,232 @@
+<form [formGroup]="updateTempleForm" class="p-5">
+    <div class="row mt-5">
+      <h3 class="section-header-title text-center">Add a Temple</h3>
+    </div>
+    <div class="temple-form-heading">
+      <h3>Temple details</h3>
+      <hr />
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="contact_name">Contact Name</label>
+            <input type="text" class="form-control" id="contact_name" formControlName="contact_name" placeholder="Enter the Temple Name">
+            <!-- <div *ngIf="updateTempleForm.get('name')?.invalid && (updateTempleForm.get('name')?.dirty || updateTempleForm.get('name')?.touched)" class="text-danger">
+              Temple Name is required
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="contact_phone">Phone Number</label>
+            <input type="text" class="form-control" id="contact_phone" formControlName="contact_phone" placeholder="Enter the Diety Name">
+            <!-- <div *ngIf="updateTempleForm.get('diety')?.invalid && (templeForm.get('name')?.dirty || templeForm.get('diety')?.touched)" class="text-danger">
+              Diety Name is required
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+              <label for="contact_email">Email</label>
+              <select class="form-control" id="contact_email" formControlName="contact_email">
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+              </select>
+              <!-- <div *ngIf="templeForm.get('is_navagraha_established')?.invalid && (templeForm.get('is_navagraha_established')?.dirty || templeForm.get('is_navagraha_established')?.touched)" class="text-danger">
+                Please select an option
+              </div> -->
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="templeName">Temple Name *</label>
+            <input type="text" class="form-control" id="templeName" formControlName="name" placeholder="Enter the Temple Name">
+            <!-- <div *ngIf="updateTempleForm.get('name')?.invalid && (updateTempleForm.get('name')?.dirty || updateTempleForm.get('name')?.touched)" class="text-danger">
+              Temple Name is required
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="templeName">Diety Name *</label>
+            <input type="text" class="form-control" id="templeName" formControlName="diety" placeholder="Enter the Diety Name">
+            <!-- <div *ngIf="updateTempleForm.get('diety')?.invalid && (templeForm.get('name')?.dirty || templeForm.get('diety')?.touched)" class="text-danger">
+              Diety Name is required
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+              <label for="is_navagraha_established">Is Navagraha Established</label>
+              <select class="form-control" id="is_navagraha_established" formControlName="is_navagraha_established">
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+              </select>
+              <!-- <div *ngIf="templeForm.get('is_navagraha_established')?.invalid && (templeForm.get('is_navagraha_established')?.dirty || templeForm.get('is_navagraha_established')?.touched)" class="text-danger">
+                Please select an option
+              </div> -->
+            </div>
+          </div>
+      </div>
+      <div class="row">
+
+        
+        
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="construction_year">Temple Construction Year</label>
+            <input type="text" class="form-control" id="construction_year" formControlName="construction_year" placeholder="Enter the Temple Construction Year">
+            <!-- <div *ngIf="templeForm.get('construction_year')?.invalid && (templeForm.get('construction_year')?.dirty || templeForm.get('construction_year')?.touched)" class="text-danger">
+              Construction year is required
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="is_destroyed">Is Destroyed</label>
+            <select class="form-control" id="is_destroyed" formControlName="is_destroyed">
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+            <!-- <div *ngIf="templeForm.get('is_destroyed')?.invalid && (templeForm.get('is_destroyed')?.dirty || templeForm.get('is_destroyed')?.touched)" class="text-danger">
+              Please select an option
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="animal_sacrifice_status">Animal Sacrifice Status</label>
+            <select class="form-control" id="animal_sacrifice_status" formControlName="animal_sacrifice_status">
+              <option [ngValue]="true">Yes</option>
+              <option [ngValue]="false">No</option>
+            </select>
+            <!-- <div *ngIf="templeForm.get('animal_sacrifice_status')?.invalid && (templeForm.get('animal_sacrifice_status')?.dirty || templeForm.get('animal_sacrifice_status')?.touched)" class="text-danger">
+              Please select an option
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="desc">About The Temple</label>
+            <textarea class="form-control" id="desc" formControlName="desc" placeholder="Describe about the temple in less than 4500 words" rows="5"></textarea>
+            <!-- <div *ngIf="templeForm.get('desc')?.invalid && (templeForm.get('desc')?.dirty || templeForm.get('desc')?.touched)" class="text-danger">
+              
+              <div *ngIf="templeForm.get('desc')?.errors?.['maxlength']">Description cannot be more than 4500 words</div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+     
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="temple_map_location">Temple Map Location (URL) *</label>
+            <div class="input-group">
+              <input
+                type="url"
+                class="form-control"
+                id="temple_map_location"
+                formControlName="temple_map_location"
+                placeholder="https://example.com/map"
+              />
+              <div class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="getCurrentLocation()"
+                  title="Fetch Current Location"
+                >
+                  📍 Get Location
+                </button>
+              </div>
+            </div>
+            <small class="form-text text-muted">
+              Please provide a valid URL for the temple's map location.
+            </small>
+            <!-- <div
+              *ngIf="templeForm.get('temple_map_location')?.invalid && (templeForm.get('temple_map_location')?.dirty || templeForm.get('temple_map_location')?.touched)"
+              class="text-danger"
+            >
+              Please enter a valid URL for the Temple Map Location.
+            </div> -->
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+
+
+
+
+
+
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="address">Total Address *</label>
+            <textarea class="form-control" id="address" formControlName="address" placeholder="Total Address" rows="2"></textarea>
+            <!-- <div *ngIf="templeForm.get('address')?.invalid && (templeForm.get('address')?.dirty || templeForm.get('address')?.touched)" class="text-danger">
+              Address is required
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-6">
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" id="status" formControlName="status">
+              <option [ngValue]="true">ACTIVE</option>
+              <option [ngValue]="false">INACTIVE</option>
+            </select>
+            <!-- <div *ngIf="templeForm.get('is_destroyed')?.invalid && (templeForm.get('is_destroyed')?.dirty || templeForm.get('is_destroyed')?.touched)" class="text-danger">
+              Please select an option
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- <div >
+        <div class="row mt-2" >
+          <label>Temple Image *</label>
+          <div>
+            <nz-upload
+              nzListType="picture-card"
+              [(nzFileList)]="bannerFileList"
+              [nzMultiple]="true"
+              [nzShowButton]="bannerFileList.length < 10"
+              (nzChange)="handleBannerFileChange($event)"
+              [nzAccept]="'image/*'"
+              (nzRemove)="handleBannerFileRemove($event)"
+            >
+              <div >
+                <i nz-icon nzType="plus"></i>
+                Add Temple Images
+              </div>
+            </nz-upload>
+    
+            
+          </div>
+        </div>
+    
+        
+        
+      </div> -->
+      
+      <div class="text-center">
+        <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+      </div>
+    </div>
+  </form>

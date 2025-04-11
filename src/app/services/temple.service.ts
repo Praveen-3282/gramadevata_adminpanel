@@ -11,7 +11,7 @@ export class TempleService {
   constructor(private httpclient: HttpClient) { }
 
    getalltemples():Observable<any>{
-    return this.httpclient.get(URL+"temple")
+    return this.httpclient.get(URL+"temple_inactive")
   }
 
   getbytemple(_id:string):Observable<any>{
@@ -31,4 +31,16 @@ export class TempleService {
       }
     })
   }
+
+  updateTempleDetails(templeId: string, templeData: any): Observable<any> {
+    const updateUrl = `${URL}temple/${templeId}/`;  // Assuming the temple ID is passed in the URL
+    return this.httpclient.put(updateUrl, templeData);
+  }
+
+
+
+  Editbytemplegetresponse(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"temple/"+ _id)
+  }
+  
 }

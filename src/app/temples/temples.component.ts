@@ -30,11 +30,11 @@ export class TemplesComponent {
   constructor(private templeservice: TempleService, private router: Router, private authenticationservice: AuthenticationService){}
 
   ngOnInit(): void{
-    this.fetchTemples();
+    this.fetchallTemples();
     this.getAllCategories();
   }
 
-  fetchTemples(): void {
+  fetchallTemples(): void {
     this.templeservice.getalltemples().subscribe({
       next: (data) => {
         this.temples = data.results.sort((a: any, b: any) =>
@@ -72,7 +72,9 @@ export class TemplesComponent {
     this.router.navigate(['temples', templeId])
   }
 
-
+  editTemple(temple: any): void {
+    this.router.navigate(['edit_temple',temple]);
+  }
   
 
   handleImageError(event: Event){
@@ -223,4 +225,6 @@ export class TemplesComponent {
   onImageClick(image: string): void {
     this.selectedImage = image; // Update the main image
   }
+
+  
 }

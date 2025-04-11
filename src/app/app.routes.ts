@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { TemplesComponent } from './temples/temples.component';
 import { EventsComponent } from './events/events.component';
 import { GoshalasComponent } from './goshalas/goshalas.component';
+import { EditTempleComponent } from './edit-temple/edit-temple.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'temples', pathMatch: 'full'},
@@ -12,6 +13,7 @@ export const routes: Routes = [
     {path: 'temples', component: TemplesComponent},
     {path: 'events', component: EventsComponent},
     {path: 'goshalas', component: GoshalasComponent},
+    {path: 'edit_temple/:id', component: EditTempleComponent}
     // {path: 'signup', component: SignupComponent},
     // {path: 'verify', component: VerifyComponent}
 
