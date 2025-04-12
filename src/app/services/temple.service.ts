@@ -42,5 +42,72 @@ export class TempleService {
   Editbytemplegetresponse(_id:string):Observable<any>{
     return this.httpclient.get(URL+"temple/"+ _id)
   }
+
+
+
+
+
+  GetVillageByTemples(_id:any):Observable<any>{
+    return this.httpclient.get(URL+"templeget/object_id/"+_id)
+  }
+  getbycountrytemples(_id:string):Observable<any>{
+    return this.httpclient.get(URL+'templeget/object_id/'+_id)
+  }
+
+  getStates():Observable<any> {
+    return this.httpclient.get(URL+"state")
+  }
+  getbyStates(_id:string):Observable<any> {
+    return this.httpclient.get(URL+"state?country="+_id)
+  }
+
+  getStatetemples(id:string):Observable<any>{
+    return this.httpclient.get(URL+"temples/state_id/"+id)
+  }
+
+  getdistricts(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"district?state="+_id)
+  }
+
+  getDistrictsTemples(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"temples/district_id/"+_id)
+  }
+
+  getblocks(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"block?district_id="+_id)
+  }
+
+  getBlockTemples(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"temples/block_id/"+_id)
+  }
+  getvillages(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"village?block="+_id)
+  }
+
+  addTemple(templeData: any): Observable<any> {
+    return this.httpclient.post(URL+"temple", templeData);
+  }
+
+  getTempleCategorybyId(_id:string):Observable<any>{
+    return this.httpclient.get(URL+'templeCategeory?_id='+_id)
+  }
+
+
+  getStatesbyCategoeyTemples(_id:string):Observable<any>{
+    return this.httpclient.get(URL+'?object_id__block__district__state_id='+_id)
+  }
+
+  GetAllCountries():Observable<any>{
+    return this.httpclient.get(URL+"country")
+  }
+
+  getpriority():Observable<any>{
+    return this.httpclient.get(URL+"templepriority")
+  }
+
+  GetallCategories():Observable<any>{
+   
+    return this.httpclient.get(URL+"templeCategeory")
+  }
   
 }

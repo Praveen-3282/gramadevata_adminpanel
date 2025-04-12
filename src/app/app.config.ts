@@ -6,6 +6,7 @@ import { importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { tokenInterceptor } from './interceptors/token.interceptor';
 
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 
 export const appConfig: ApplicationConfig = {
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HttpClientModule),
     provideAnimations(),
     provideHttpClient(withInterceptors([tokenInterceptor])),
+    NzModalService
   ]
 };
 
