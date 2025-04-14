@@ -3,85 +3,81 @@
   
     
       <div class="col-md-3 border-end d-flex flex-column">
-        <h5>Events</h5>
-        <hr>
-        
-  
-        <!-- <div class="overflow-auto" style="max-height: 680px;">
-          <ul class="list-unstyled">
-            <li *ngFor="let temple of temples" class="mb-2">
-              <button class="btn w-100 d-flex align-items-center"
-
-                (click)="fetchgoshalagetbyid(temple)"
-              >
-                <img
-                  [src]="temple.image_location"
-                  alt="temple logo"
-                  width="30"
-                  height="30"
-                  class="me-2 rounded-circle"
-                />
-                {{ temple.name }}
-              </button>
-            </li>
-            
-          </ul>
-        </div> -->
-
-        <div *ngIf="events.length; else noEvents">
-            <div *ngFor="let event of events" class="event-item">
-              <h3>{{ event.name }}</h3>
-              <img [src]="event.image" [alt]="event.name" class="event-image" />
-            </div>
-          </div>
-          
-          <ng-template #noEvents>
-            <p>No events available at the moment.</p>
-          </ng-template>
-          
-        
-      </div>
-  
-  
-      <div class="col-md-5 border-end d-flex flex-column">
-        <h5>Events Category</h5>
+        <h5>Past Events</h5>
         <hr>
         <div class="overflow-auto" style="max-height: 680px;">
-          <!-- <div *ngIf="selectedTemple">
-            <div class="d-flex justify-content-center">
-              <img [src]="selectedTemple.image_location" [alt]="selectedTemple.name"
-                   class="img-fluid rounded" style="height: 300px; width: 300px;">
-            </div>
-            <div class="mt-3">
-              <h6 class="text-center">{{ selectedTemple.name }}</h6>
-              <p><strong>Contact Name:</strong> {{ selectedTemple.contact_name }}</p>
-              <p><strong>Address:</strong> {{ selectedTemple.address }}</p>
-              <p><strong>Contact Number:</strong> {{ selectedTemple.contact_phone }}</p>
-              <p><strong>Timings:</strong> {{ selectedTemple.temple_timings }}</p>
-              <p><strong>Category:</strong> {{ selectedTemple.category }}</p>
-
-              <p><strong>Map Location:</strong>
-                <a [href]="selectedTemple.temple_map_location" target="_blank">View on Map</a>
-              </p>
-              <p><strong>Description:</strong> {{ selectedTemple.desc }}</p>
-  
-  
-              
-              <div class="text-center">
-                <button class="btn btn-sm btn-outline-secondary ms-2" (click)="editGoshala(selectedTemple._id)" >
-                  Edit
-                </button>
+        <div class="container mt-4">
+          <div class="row" *ngIf="events && events.length > 0; else noEvents">
+            <div class="col-md-4 mb-4" *ngFor="let event of events">
+              <div class="card h-100" (click)="onEventClick(event)" style="cursor: pointer;">
+                <img [src]="event.image_location" class="card-img-top" alt="{{ event.name }}" >
+                <div class="card-body">
+                  <p class="card-title">{{ event.name }}</p>
+                </div>
               </div>
-              
             </div>
-          </div> -->
-          <!-- <div *ngIf="!selectedTemple">
-            <p>Select a temple to view its image and details</p>
-          </div> -->
+          </div>
+        
+          <ng-template #noEvents>
+            <div class="alert alert-info" role="alert">
+              No inactive events found.
+            </div>
+          </ng-template>
         </div>
       </div>
+        
+      </div>
   
-   
+  
+      <div class="col-md-3 border-end d-flex flex-column">
+        <h5>Upcoming Events</h5>
+        <hr>
+        <div class="container mt-4">
+          <div class="row" *ngIf="events && events.length > 0; else noEvents">
+            <div class="col-md-4 mb-4" *ngFor="let event of upcomingevents">
+              <div class="card h-100" (click)="onEventClick(event)" style="cursor: pointer;">
+                <img [src]="event.image_location" class="card-img-top" alt="{{ event.name }}">
+                <div class="card-body">
+                  <p class="card-title">{{ event.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <ng-template #noEvents>
+            <div class="alert alert-info" role="alert">
+              No inactive events found.
+            </div>
+          </ng-template>
+        </div>
+        
+        
+      </div>
+  
+      <div class="col-md-6 border-end d-flex flex-column">
+        <div class="overflow-auto" style="max-height: 780px;">
+          <div class="mt-4" *ngIf="selectedEvent">
+            <div class="card d-flex justify-content-center">
+              <img [src]="selectedEvent.image_location" class="card-img-top" alt="{{ selectedEvent.name }}" style="height: 300px; width: 300px; ">
+              <div class="card-body">
+                <h5 class="card-title">{{ selectedEvent.name }}</h5>
+                <p><strong>Contact Name:</strong> {{ selectedEvent.contact_name }}</p>
+                <p><strong>Contact Number:</strong> {{ selectedEvent.contact_phone }}</p>
+                <p><strong>Contact Email:</strong> {{ selectedEvent.contact_email }}</p>
+                <p><strong>Start Date:</strong> {{ selectedEvent.start_date }}</p>
+                <p><strong>Start Time:</strong> {{ selectedEvent.start_time }}</p>
+                <p><strong>End Date:</strong> {{ selectedEvent.end_date }}</p>
+                <p><strong>End Time:</strong> {{ selectedEvent.end_time }}</p>
+                <p><strong>Map Location:</strong> {{ selectedEvent.map_location }}</p>
+                <p><strong>Address:</strong> {{ selectedEvent.address }}</p>
+                <p><strong>Description:</strong> {{ selectedEvent.desc }}</p>
+                <!-- Add more event details here as needed -->
+                <button class="btn btn-secondary mt-2" (click)="navigateeditevent()">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
   
     </div>

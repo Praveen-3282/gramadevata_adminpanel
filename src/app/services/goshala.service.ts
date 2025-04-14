@@ -15,9 +15,9 @@ export class GoshalaService {
     }
 
 
-    GetallGoshala():Observable<any>{
-      return this.httpclient.get(URL+"goshala")
-    }
+    // GetallGoshala():Observable<any>{
+    //   return this.httpclient.get(URL+"goshala")
+    // }
 
     filterGoshalas(categoryId: string, locationId: string, page: number = 1): Observable<any> {
       return this.httpclient.get(`${URL}locationByGoshalas/`, {

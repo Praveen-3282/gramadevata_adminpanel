@@ -70,25 +70,25 @@ export class GoshalasComponent {
     this.getAllCategories();
   }
 
+  
+
+
   fetchagoshals(): void {
-    this.goshalaService.GetallGoshala().subscribe({
-      next: (data) => {
-        this.temples = data.sort((a: any, b: any) =>
+    this.goshalaService.getallgoshalas().subscribe({
+      next: (data: any[]) => {
+        this.temples = data.sort((a, b) =>
           a.name.localeCompare(b.name)
         );
         console.log('All temples (sorted):', this.temples);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error fetching temples:', error);
       }
     });
   }
   
-  // selectTemple(temple: any): void {
-  //   this.selectedTemple = temple;
-   
-    
-  // }
+  
+ 
 
 
   fetchgoshalagetbyid(temple:any): void {

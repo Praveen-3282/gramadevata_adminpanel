@@ -71,12 +71,12 @@ export class EditGoshalaComponent {
 
 
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
     this.fetchAllPriority();
     this.fetchallCategorys();
 
 
-    // this.getTempleDetails();
+    
     const templeId = this.route.snapshot.paramMap.get('id');
     if (templeId) {
       this.getTempleDetails(templeId);
@@ -96,6 +96,9 @@ export class EditGoshalaComponent {
       map_location: ['', Validators.required],
       address: ['', Validators.required],
       desc: [''],
+      contact_phone: ['', Validators.required],
+      contact_name: ['', Validators.required],
+      reg_num:['', Validators.required],
       status: ['INACTIVE'],
       image_location: ['', Validators.required],
       category: ['', Validators.required],
@@ -110,40 +113,40 @@ export class EditGoshalaComponent {
 
       
     
-  })
+     })
 
-  if (this.village_id != null) {
-    // Enable object_id before setting its value
-    this.updateGoshalaForm.get('object_id')?.enable();
+      if (this.village_id != null) {
+        // Enable object_id before setting its value
+        this.updateGoshalaForm.get('object_id')?.enable();
 
-    // Strictly set the value using setValue
-    try {
-      this.updateGoshalaForm.get('object_id')?.setValue(this.village_id);
-      console.log(this.updateGoshalaForm.get('object_id')?.value, "Updated object_id value");
-    } catch (error) {
-      console.error("Error setting object_id:", error);
-    }
+        // Strictly set the value using setValue
+        try {
+          this.updateGoshalaForm.get('object_id')?.setValue(this.village_id);
+          console.log(this.updateGoshalaForm.get('object_id')?.value, "Updated object_id value");
+        } catch (error) {
+          console.error("Error setting object_id:", error);
+        }
 
-    // Clear validators for location fields
-    this.updateGoshalaForm.get('country')?.clearValidators();
-    this.updateGoshalaForm.get('state')?.clearValidators();
-    this.updateGoshalaForm.get('district')?.clearValidators();
-    this.updateGoshalaForm.get('mandal')?.clearValidators();
-  } else {
-    // When village_id is null, disable object_id and require location fields
-    this.updateGoshalaForm.get('object_id')?.disable();
-    this.updateGoshalaForm.get('country')?.setValidators(Validators.required);
-    this.updateGoshalaForm.get('state')?.setValidators(Validators.required);
-    this.updateGoshalaForm.get('district')?.setValidators(Validators.required);
-    this.updateGoshalaForm.get('mandal')?.setValidators(Validators.required);
-  }
+        // Clear validators for location fields
+        this.updateGoshalaForm.get('country')?.clearValidators();
+        this.updateGoshalaForm.get('state')?.clearValidators();
+        this.updateGoshalaForm.get('district')?.clearValidators();
+        this.updateGoshalaForm.get('mandal')?.clearValidators();
+      } else {
+        // When village_id is null, disable object_id and require location fields
+        this.updateGoshalaForm.get('object_id')?.disable();
+        this.updateGoshalaForm.get('country')?.setValidators(Validators.required);
+        this.updateGoshalaForm.get('state')?.setValidators(Validators.required);
+        this.updateGoshalaForm.get('district')?.setValidators(Validators.required);
+        this.updateGoshalaForm.get('mandal')?.setValidators(Validators.required);
+      }
 
-  // Update validation status after changing validators
-  this.updateGoshalaForm.get('country')?.updateValueAndValidity();
-  this.updateGoshalaForm.get('state')?.updateValueAndValidity();
-  this.updateGoshalaForm.get('district')?.updateValueAndValidity();
-  this.updateGoshalaForm.get('mandal')?.updateValueAndValidity();
-  this.updateGoshalaForm.get('object_id')?.updateValueAndValidity();
+      // Update validation status after changing validators
+      this.updateGoshalaForm.get('country')?.updateValueAndValidity();
+      this.updateGoshalaForm.get('state')?.updateValueAndValidity();
+      this.updateGoshalaForm.get('district')?.updateValueAndValidity();
+      this.updateGoshalaForm.get('mandal')?.updateValueAndValidity();
+      this.updateGoshalaForm.get('object_id')?.updateValueAndValidity();
 
   
 
@@ -283,27 +286,13 @@ private resetFormFields(fields: string[]) {
       district:response.district,
       state:response.state,
       country:response.country,
+      reg_num: response.reg_num
 
      })
     }
   );
   }
   
-  // onSubmit() {
-  //   const templeId = this.route.snapshot.paramMap.get('templeId');
-  //   if (templeId) {
-  //     this.templeService.updateTempleDetails(templeId, this.templeData).subscribe(
-  //       response => {
-  //         console.log('Temple updated successfully!', response);
-  //       },
-  //       error => {
-  //         console.error('Error updating temple', error);
-  //       }
-  //     );
-  //   }
-  // }
-
-
   onSubmit(): void {
     console.log('Submit button clicked');
     const templeId = this.route.snapshot.paramMap.get('templeId');
@@ -398,7 +387,7 @@ private resetFormFields(fields: string[]) {
 
 
 
-
+ 
 
   fetchAllPriority(): void {
     this.templeService.getpriority().subscribe((res) => {

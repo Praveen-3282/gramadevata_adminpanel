@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { URL } from '../../constant';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +20,15 @@ export class EventService {
   }
 
 
-  GetallEvents():Observable<any>{
-    return this.httpclient.get(URL+"event")
+  GetallinactiveEvents():Observable<any>{
+    return this.httpclient.get(URL+"events_inactive")
+  }
+
+  getbyevent(id:string):Observable<any>{
+    return this.httpclient.get(URL+"event?_id="+id)
+  }
+
+  Editbyeventresponse(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"event/"+ _id)
   }
 }
