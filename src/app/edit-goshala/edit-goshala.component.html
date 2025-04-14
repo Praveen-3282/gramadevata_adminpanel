@@ -1,0 +1,304 @@
+
+
+
+
+<div class="container py-4 header-m mt-5 " translate="no">
+    <div class="form-card">
+  
+      <form [formGroup]="updateGoshalaForm" class="p-5">
+        <div class="row mt-5">
+          <h3 class="section-header-title text-center">Update Goshala</h3>
+        </div>
+        <div class="temple-form-heading">
+          <h3>Temple details</h3>
+          <hr />
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="GoshalaName">Goshala Name *</label>
+                <input type="text" class="form-control" id="GoshalaName" formControlName="name" placeholder="Enter the Goshala Name">
+                <div *ngIf="updateGoshalaForm.get('name')?.invalid && (updateGoshalaForm.get('name')?.dirty || updateGoshalaForm.get('name')?.touched)" class="text-danger">
+                  Goshala Name is required
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-4">
+              <div class="form-group">
+                <label for="templeName">Diety Name *</label>
+                <input type="text" class="form-control" id="templeName" formControlName="diety" placeholder="Enter the Diety Name">
+                <div *ngIf="updateGoshalaForm.get('diety')?.invalid && (updateGoshalaForm.get('name')?.dirty || updateGoshalaForm.get('diety')?.touched)" class="text-danger">
+                  Diety Name is required
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="goshalaCategory">Goshala Category *</label>
+                <select class="form-control" id="goshalaCategory" formControlName="category">
+                  <option *ngFor="let option of templeCategoryOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
+                <div *ngIf="updateGoshalaForm.get('category')?.invalid && (updateGoshalaForm.get('category')?.dirty || updateGoshalaForm.get('category')?.touched)" class="text-danger">
+                  Temple Category is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="goshalanmae">Contact Name*</label>
+                    <input type="text" class="form-control" id="templeName" formControlName="contact_name" placeholder="Enter the Contact Name">
+                    <div *ngIf="updateGoshalaForm.get('contact_name')?.invalid && (updateGoshalaForm.get('contact_name')?.dirty || updateGoshalaForm.get('contact_name')?.touched)" class="text-danger">
+                      Contact Name is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                  <label for="contact_number">Contact Number*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="contact_phone"
+                    placeholder="Enter the Contact Number"
+                  />
+                  <!-- Error messages for validation -->
+                  <div
+                    *ngIf="
+                      contactNumber?.invalid &&
+                      (contactNumber?.dirty || contactNumber?.touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div *ngIf="contactNumber?.errors?.['required']">
+                      Contact Number is required
+                    </div>
+                    <div *ngIf="contactNumber?.errors?.['pattern']">
+                      Contact Number must be a 10-digit number
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                 <label for="registartion numer">Registration Number</label>
+                 <input type="text" class="form-control" id="reg_num" formControlName="reg_num" placeholder="Enter the Registration Number ">
+                 <div *ngIf="updateGoshalaForm.get('reg_num')?.invalid && (updateGoshalaForm.get('reg_num')?.dirty || updateGoshalaForm.get('reg_num')?.touched)" class="text-danger">
+                   Registration Number is required
+                 </div>
+                </div> 
+             </div>
+            <!-- <div class="col-md-4">
+              <div class="form-group">
+                <label for="priority">Temple Priority *</label>
+                <select class="form-control" id="priority" formControlName="priority">
+                  <option *ngFor="let option of templePriorityOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
+                <div *ngIf="updateGoshalaForm.get('priority')?.invalid && (updateGoshalaForm.get('priority')?.dirty || updateGoshalaForm.get('priority')?.touched)" class="text-danger">
+                  Temple Priority is required
+                </div>
+              </div>
+            </div> -->
+            <!-- <div class="col-md-4">
+              <div class="form-group">
+                <label for="is_navagraha_established">Is Navagraha Established</label>
+                <select class="form-control" id="is_navagraha_established" formControlName="is_navagraha_established">
+                  <option [ngValue]="true">Yes</option>
+                  <option [ngValue]="false">No</option>
+                </select>
+                <div *ngIf="updateGoshalaForm.get('is_navagraha_established')?.invalid && (updateGoshalaForm.get('is_navagraha_established')?.dirty || updateGoshalaForm.get('is_navagraha_established')?.touched)" class="text-danger">
+                  Please select an option
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="row">
+            <!-- <div class="col-md-4">
+              <div class="form-group">
+                <label for="construction_year">Temple Construction Year</label>
+                <input type="text" class="form-control" id="construction_year" formControlName="construction_year" placeholder="Enter the Temple Construction Year">
+                <div *ngIf="updateGoshalaForm.get('construction_year')?.invalid && (updateGoshalaForm.get('construction_year')?.dirty || updateGoshalaForm.get('construction_year')?.touched)" class="text-danger">
+                  Construction year is required
+                </div>
+              </div>
+            </div> -->
+           
+            <!-- <div class="col-md-4">
+              <div class="form-group">
+                <label for="animal_sacrifice_status">Animal Sacrifice Status</label>
+                <select class="form-control" id="animal_sacrifice_status" formControlName="animal_sacrifice_status">
+                  <option [ngValue]="true">Yes</option>
+                  <option [ngValue]="false">No</option>
+                </select>
+                <div *ngIf="updateGoshalaForm.get('animal_sacrifice_status')?.invalid && (updateGoshalaForm.get('animal_sacrifice_status')?.dirty || updateGoshalaForm.get('animal_sacrifice_status')?.touched)" class="text-danger">
+                  Please select an option
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="desc">About The Goshala</label>
+                <textarea class="form-control" id="desc" formControlName="desc" placeholder="Describe about the temple in less than 4500 words" rows="5"></textarea>
+                <div *ngIf="updateGoshalaForm.get('desc')?.invalid && (updateGoshalaForm.get('desc')?.dirty || updateGoshalaForm.get('desc')?.touched)" class="text-danger">
+                  
+                  <div *ngIf="updateGoshalaForm.get('desc')?.errors?.['maxlength']">Description cannot be more than 4500 words</div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+  
+  
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="map_location">Goshala Map Location (URL) *</label>
+                <div class="input-group">
+                  <input
+                    type="url"
+                    class="form-control"
+                    id="map_location"
+                    formControlName="map_location"
+                    placeholder="https://example.com/map"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      (click)="getCurrentLocation()"
+                      title="Fetch Current Location"
+                    >
+                      📍 Get Location
+                    </button>
+                  </div>
+                </div>
+                <small class="form-text text-muted">
+                  Please provide a valid URL for the temple's map location.
+                </small>
+                <div
+                  *ngIf="updateGoshalaForm.get('temple_map_location')?.invalid && (updateGoshalaForm.get('temple_map_location')?.dirty || updateGoshalaForm.get('temple_map_location')?.touched)"
+                  class="text-danger"
+                >
+                  Please enter a valid URL for the Temple Map Location.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          
+  
+  
+  
+  
+  
+  
+  
+  
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address">Total Address *</label>
+                <textarea class="form-control" id="address" formControlName="address" placeholder="Total Address" rows="2"></textarea>
+                <div *ngIf="updateGoshalaForm.get('address')?.invalid && (updateGoshalaForm.get('address')?.dirty || updateGoshalaForm.get('address')?.touched)" class="text-danger">
+                  Address is required
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+          
+          <div class="row"  *ngIf="!InVillage">
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please select a country">
+                  <label for="country">Country*</label>
+                  <nz-select formControlName="country" nzPlaceHolder="Select country" [nzShowSearch]="true"  nzNotFoundContent="No data found">
+                    <nz-option *ngFor="let option of templeCountryOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="State is required">
+                  <label for="state">State*</label>
+                  <nz-select formControlName="state" nzPlaceHolder="Select state" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                    <nz-option *ngFor="let option of templeStateOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="District is required">
+                  <label for="district">District*</label>
+                  <nz-select formControlName="district" nzPlaceHolder="Select district" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                    <nz-option *ngFor="let option of templeDistrictOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Mandal is required">
+                  <label for="mandal">Mandal*</label>
+                  <nz-select formControlName="mandal" nzPlaceHolder="Select mandal" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                    <nz-option *ngFor="let option of templeMandalOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Village is required">
+                  <label for="village">Village*</label>
+                  <nz-select formControlName="object_id" nzPlaceHolder="Select village" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                    <nz-option *ngFor="let option of templeVillageOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+    
+  
+          <div >
+            <div class="row mt-2" >
+              <label>Temple Image *</label>
+              <div>
+                <nz-upload
+                  nzListType="picture-card"
+                  [(nzFileList)]="bannerFileList"
+                  [nzMultiple]="true"
+                  [nzShowButton]="bannerFileList.length < 10"
+                  (nzChange)="handleBannerFileChange($event)"
+                  [nzAccept]="'image/*'"
+                  (nzRemove)="handleBannerFileRemove($event)"
+                >
+                  <div >
+                    <i nz-icon nzType="plus"></i>
+                    Add Temple Images
+                  </div>
+                </nz-upload>
+        
+                
+              </div>
+            </div>
+        
+            
+            
+          </div>
+          
+          <div class="text-center">
+            <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

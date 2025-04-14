@@ -35,7 +35,7 @@ export class AuthenticationService {
     this.isLoggedIn = false;
     this.userservice.isMemberIn = false;
     
-    this.router.navigate(['home'])
+    this.router.navigate(['temples'])
     localStorage.removeItem('profile_pic');
 
      

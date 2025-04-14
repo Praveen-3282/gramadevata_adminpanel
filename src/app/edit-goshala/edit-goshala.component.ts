@@ -14,24 +14,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { Route, Router } from '@angular/router';
-
-
+import { GoshalaService } from '../services/goshala.service';
 @Component({
-  selector: 'app-edit-temple',
+  selector: 'app-edit-goshala',
   imports: [ReactiveFormsModule, CommonModule,NzUploadModule,
     NzFormModule,
     NzInputModule,
     NzSelectModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule,
-  ],
-  templateUrl: './edit-temple.component.html',
-  styleUrl: './edit-temple.component.css'
+    MatInputModule],
+  templateUrl: './edit-goshala.component.html',
+  styleUrl: './edit-goshala.component.css'
 })
-export class EditTempleComponent {
-
-  updateTempleForm!: FormGroup;
+export class EditGoshalaComponent {
+  updateGoshalaForm!: FormGroup;
   templeData:any;
   userId:any;
   templeId: any;
@@ -64,6 +61,7 @@ export class EditTempleComponent {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private formBuilder: FormBuilder,
+    private goshalaService:GoshalaService
 
   ) {
 
@@ -86,7 +84,7 @@ export class EditTempleComponent {
 
 
 
-    this.updateTempleForm = this.fb.group({
+    this.updateGoshalaForm = this.fb.group({
       
       name: ['', Validators.required],
       is_navagraha_established: [false],
@@ -95,7 +93,7 @@ export class EditTempleComponent {
       animal_sacrifice_status: [false],
       diety: ['', Validators.required],
       style: [''],
-      temple_map_location: ['', Validators.required],
+      map_location: ['', Validators.required],
       address: ['', Validators.required],
       desc: [''],
       status: ['INACTIVE'],
@@ -116,36 +114,36 @@ export class EditTempleComponent {
 
   if (this.village_id != null) {
     // Enable object_id before setting its value
-    this.updateTempleForm.get('object_id')?.enable();
+    this.updateGoshalaForm.get('object_id')?.enable();
 
     // Strictly set the value using setValue
     try {
-      this.updateTempleForm.get('object_id')?.setValue(this.village_id);
-      console.log(this.updateTempleForm.get('object_id')?.value, "Updated object_id value");
+      this.updateGoshalaForm.get('object_id')?.setValue(this.village_id);
+      console.log(this.updateGoshalaForm.get('object_id')?.value, "Updated object_id value");
     } catch (error) {
       console.error("Error setting object_id:", error);
     }
 
     // Clear validators for location fields
-    this.updateTempleForm.get('country')?.clearValidators();
-    this.updateTempleForm.get('state')?.clearValidators();
-    this.updateTempleForm.get('district')?.clearValidators();
-    this.updateTempleForm.get('mandal')?.clearValidators();
+    this.updateGoshalaForm.get('country')?.clearValidators();
+    this.updateGoshalaForm.get('state')?.clearValidators();
+    this.updateGoshalaForm.get('district')?.clearValidators();
+    this.updateGoshalaForm.get('mandal')?.clearValidators();
   } else {
     // When village_id is null, disable object_id and require location fields
-    this.updateTempleForm.get('object_id')?.disable();
-    this.updateTempleForm.get('country')?.setValidators(Validators.required);
-    this.updateTempleForm.get('state')?.setValidators(Validators.required);
-    this.updateTempleForm.get('district')?.setValidators(Validators.required);
-    this.updateTempleForm.get('mandal')?.setValidators(Validators.required);
+    this.updateGoshalaForm.get('object_id')?.disable();
+    this.updateGoshalaForm.get('country')?.setValidators(Validators.required);
+    this.updateGoshalaForm.get('state')?.setValidators(Validators.required);
+    this.updateGoshalaForm.get('district')?.setValidators(Validators.required);
+    this.updateGoshalaForm.get('mandal')?.setValidators(Validators.required);
   }
 
   // Update validation status after changing validators
-  this.updateTempleForm.get('country')?.updateValueAndValidity();
-  this.updateTempleForm.get('state')?.updateValueAndValidity();
-  this.updateTempleForm.get('district')?.updateValueAndValidity();
-  this.updateTempleForm.get('mandal')?.updateValueAndValidity();
-  this.updateTempleForm.get('object_id')?.updateValueAndValidity();
+  this.updateGoshalaForm.get('country')?.updateValueAndValidity();
+  this.updateGoshalaForm.get('state')?.updateValueAndValidity();
+  this.updateGoshalaForm.get('district')?.updateValueAndValidity();
+  this.updateGoshalaForm.get('mandal')?.updateValueAndValidity();
+  this.updateGoshalaForm.get('object_id')?.updateValueAndValidity();
 
   
 
@@ -160,7 +158,7 @@ export class EditTempleComponent {
 
       const defaultCountry = this.templeCountryOptions.find(option => option.label === 'India');
       if (defaultCountry) {
-        this.updateTempleForm.controls['country'].setValue(defaultCountry.value);
+        this.updateGoshalaForm.controls['country'].setValue(defaultCountry.value);
       }
     },
     (err) => {
@@ -169,7 +167,7 @@ export class EditTempleComponent {
   );
 
   // Listen for changes in the country dropdown and update states accordingly
-  this.updateTempleForm.get('country')?.valueChanges.subscribe(countryId => {
+  this.updateGoshalaForm.get('country')?.valueChanges.subscribe(countryId => {
     this.resetFormFields(['state', 'district', 'mandal', 'object_id']);
     if (countryId) {
       this.templeService.getbyStates(countryId).subscribe(
@@ -186,12 +184,12 @@ export class EditTempleComponent {
         },
         (err) => console.log(err)
       );
-      this.updateTempleForm.get('state')?.enable();
+      this.updateGoshalaForm.get('state')?.enable();
     }
   });
 
   // Listen for changes in the state dropdown and update districts accordingly
-  this.updateTempleForm.get('state')?.valueChanges.subscribe(stateId => {
+  this.updateGoshalaForm.get('state')?.valueChanges.subscribe(stateId => {
     this.resetFormFields(['district', 'mandal', 'object_id']);
     if (stateId) {
       this.templeService.getdistricts(stateId).subscribe(
@@ -204,12 +202,12 @@ export class EditTempleComponent {
         },
         (err) => console.log(err)
       );
-      this.updateTempleForm.get('district')?.enable();
+      this.updateGoshalaForm.get('district')?.enable();
     }
   });
 
   // Listen for changes in the district dropdown and update mandals accordingly
-  this.updateTempleForm.get('district')?.valueChanges.subscribe(districtId => {
+  this.updateGoshalaForm.get('district')?.valueChanges.subscribe(districtId => {
     this.resetFormFields(['mandal', 'object_id']);
     if (districtId) {
       this.templeService.getblocks(districtId).subscribe(
@@ -222,14 +220,14 @@ export class EditTempleComponent {
         },
         (err) => console.log(err)
       );
-      this.updateTempleForm.get('mandal')?.enable();
+      this.updateGoshalaForm.get('mandal')?.enable();
     }
   });
 
   // Listen for changes in the mandal dropdown and update villages accordingly
-  this.updateTempleForm.get('mandal')?.valueChanges.subscribe(mandalId => {
-    this.updateTempleForm.get('object_id')?.reset();
-    this.updateTempleForm.get('object_id')?.disable();
+  this.updateGoshalaForm.get('mandal')?.valueChanges.subscribe(mandalId => {
+    this.updateGoshalaForm.get('object_id')?.reset();
+    this.updateGoshalaForm.get('object_id')?.disable();
     if (mandalId) {
       this.templeService.getvillages(mandalId).subscribe(
         (res) => {
@@ -238,7 +236,7 @@ export class EditTempleComponent {
             value: village._id,
           }));
           this.templeVillageOptions.sort((a, b) => a.label.localeCompare(b.label));
-          this.updateTempleForm.get('object_id')?.enable();
+          this.updateGoshalaForm.get('object_id')?.enable();
         },
         (err) => console.log(err)
       );
@@ -246,7 +244,7 @@ export class EditTempleComponent {
   });
 
   this.templeStyleOptions = enumToMap(TempleStyle);
-  this.updateTempleForm.controls['style'].setValue('O');
+  this.updateGoshalaForm.controls['style'].setValue('O');
 
   this.formGroup = this.formBuilder.group({
     templeIsNavagraha: ['']
@@ -256,18 +254,18 @@ export class EditTempleComponent {
 // Utility function to reset and disable form fields
 private resetFormFields(fields: string[]) {
   fields.forEach(field => {
-    this.updateTempleForm.get(field)?.reset();
-    this.updateTempleForm.get(field)?.disable();
+    this.updateGoshalaForm.get(field)?.reset();
+    this.updateGoshalaForm.get(field)?.disable();
   });
 
   }
 
   getTempleDetails(temple:string) {
 
-    this.templeService.Editbytemplegetresponse(temple).subscribe((response:any) => {
-     this. updateTempleForm = this.fb.group({
+    this.goshalaService.Editbygoshalagetresponse(temple).subscribe((response:any) => {
+     this. updateGoshalaForm = this.fb.group({
       name: response.name,
-      temple_official_website: response.temple_official_website,
+      // temple_official_website: response.temple_official_website,
       temple_timings: response.temple_timings,
       image_location:response.image_location,
       status: response.status,
@@ -276,13 +274,9 @@ private resetFormFields(fields: string[]) {
       contact_phone:response.contact_phone,
       contact_name:response.contact_name,
       address: response.address,
-      temple_map_location:response.temple_map_location,
+      map_location:response.map_location,
       diety: response.diety,
-      is_navagraha_established: response.is_navagraha_established,
-      is_destroyed: response.is_destroyed,
       created_at: response.created_at,
-      animal_sacrifice_status: response. animal_sacrifice_status,
-      construction_year: response.construction_year,
       category:response.category,
       object_id:response.object_id,
       mandal:response.mandal,
@@ -336,7 +330,7 @@ private resetFormFields(fields: string[]) {
         (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          this.updateTempleForm.patchValue({
+          this.updateGoshalaForm.patchValue({
             temple_map_location: `https://www.google.com/maps?q=${lat},${lng}`,
           });
         },
@@ -377,8 +371,8 @@ private resetFormFields(fields: string[]) {
   
         // Update the form control once all images are processed
         if (base64Images.length === fileList.length) {
-          this.updateTempleForm.patchValue({ image_location: base64Images });
-          console.log('Updated images form:', this.updateTempleForm.value);
+          this.updateGoshalaForm.patchValue({ image_location: base64Images });
+          console.log('Updated images form:', this.updateGoshalaForm.value);
         }
       });
     });
@@ -418,7 +412,7 @@ private resetFormFields(fields: string[]) {
   }
 
   fetchallCategorys(): void {
-    this.templeService.GetallCategories().subscribe(
+    this.goshalaService.getGoshalaCatgeories().subscribe(
       (res) => {
         res.forEach((category: any) => {
           this.templeCategoryOptions.push({
@@ -436,7 +430,10 @@ private resetFormFields(fields: string[]) {
  
 
   get deityList(): FormArray {
-    return this.updateTempleForm.get('deityList') as FormArray;
+    return this.updateGoshalaForm.get('deityList') as FormArray;
   }
-  
+
+  get contactNumber() {
+    return this.updateGoshalaForm.get('contact_phone');
+  }
 }

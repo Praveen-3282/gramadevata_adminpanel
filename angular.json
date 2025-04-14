@@ -21,14 +21,14 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "node_modules/ng-zorro-antd/style/index.min.css"
             ],
@@ -98,5 +98,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "37b93433-43fe-43fa-88f9-9bd83ac73f6f"
   }
 }
