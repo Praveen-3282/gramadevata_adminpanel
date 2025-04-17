@@ -9,25 +9,20 @@ export class EventService {
 
   constructor( private httpclient:HttpClient ) { }
 
-  filterEvents(categoryId: string, locationId: string, page: number = 1): Observable<any> {
-    return this.httpclient.get(`${URL}locationByEvents/`, {
-      params: {
-        category: categoryId,
-        input_value: locationId,
-        page: page.toString()
-      }
-    });
-  }
-
+  // filterEvents(categoryId: string, locationId: string, page: number = 1): Observable<any> {
+  //   return this.httpclient.get(`${URL}locationByEvents/`, {
+  //     params: {
+  //       category: categoryId,
+  //       input_value: locationId,
+  //       page: page.toString()
+  //     }
+  //   });
+  // }
 
   GetallinactiveEvents():Observable<any>{
     return this.httpclient.get(URL+"events_inactive")
   }
-
-  getbyevent(id:string):Observable<any>{
-    return this.httpclient.get(URL+"event?_id="+id)
-  }
-
+ 
   Editbyeventresponse(_id:string):Observable<any>{
     return this.httpclient.get(URL+"event/"+ _id)
   }

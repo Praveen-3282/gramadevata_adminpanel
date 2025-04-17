@@ -59,7 +59,7 @@ export class TemplesComponent {
         );
         this.nearbytemples = filteredResults;
         
-        console.log("Nearby Temples:", this.nearbytemples);
+        console.log("Nearby temples:", this.nearbytemples);
       },
       (filterError: any) => {
         console.error("Error fetching nearby temples", filterError);

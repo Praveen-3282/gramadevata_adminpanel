@@ -60,9 +60,14 @@
 
             
             <div class="text-center">
-              <button class="btn btn-sm btn-outline-secondary ms-2" (click)="editTemple(selectedTemple._id)" >
+              <!-- <button class="btn btn-sm btn-outline-secondary ms-2" (click)="editTemple(selectedTemple._id)" >
                 Edit
-              </button>
+              </button> -->
+
+              <button (click)="editTemple(selectedTemple._id)" class="p-2 m-2 mr-5" style="border: 1px solid rgb(238, 141, 51); background-color: rgb(238, 141, 51); border-radius: 25px; color: black; width: 130px; height: 50px; font-size: 18px;">
+                <!-- <i class="fas fa-calendar-alt faicon"></i> -->
+                Edit
+            </button>
             </div>
             
           </div>

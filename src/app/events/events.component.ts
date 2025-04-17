@@ -50,6 +50,7 @@ export class EventsComponent {
       }
 
       onEventClick(event: any) {
+        
         this.selectedEvent = event;
       }
 

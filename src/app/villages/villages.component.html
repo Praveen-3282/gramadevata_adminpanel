@@ -1,32 +1,37 @@
-
-
 <div class="container-fluid mx-3 p-4 border rounded" style=" margin-top: 100px; min-height:800px; width: 1643px;">
     <div class="row">
   
-    
       <div class="col-md-6 border-end d-flex flex-column">
         <h5>Villages</h5>
         <hr>
         <div class="overflow-auto" style="max-height: 680px;">
-        <div class="container mt-4">
-          <div class="row"  *ngIf="villages && villages.length> 0; else noEvents">
-            <div class="col-md-4 mb-4" *ngFor="let village of villages" >
-              <div class="card h-100" (click)="navigateToVillage(village)" style="cursor: pointer;">
-                <img [src]="village.image_location" class="card-img-top" alt="{{ village.name }}" >
-                <div class="card-body">
-                  <p class="card-title">{{ village.name }}</p>
-                </div>
+          <ul class="list-unstyled">
+            <li *ngFor="let village of villages" class="mb-2">
+              <button class="btn w-100 d-flex align-items-center"
+              [ngClass]="{
+                'btn-outline-primary': selectedVillage !== village,
+                'btn-primary': selectedVillage === village
+              }"
+                (click)="navigateToVillage(village)"
+              >
+                <img
+                  [src]="village.image_location"
+                  alt="temple logo"
+                  width="30"
+                  height="30"
+                  class="me-2 rounded-circle"
+                />
+                {{ village.name }}
+              </button>
+            </li>
+            <ng-template #noEvents>
+              <div class="alert alert-info" role="alert">
+                No inactive events found.
               </div>
-            </div>
-          </div>
-        
-          <ng-template #noEvents>
-            <div class="alert alert-info" role="alert">
-              No inactive Villages found.
-            </div>
-          </ng-template>
-        </div>
+            </ng-template>
+          </ul>
       </div>
+     
         
       </div>
   

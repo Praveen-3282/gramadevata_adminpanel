@@ -19,17 +19,19 @@ export class VillagesComponent {
     this.getInactiveVillages();
   }
 
-  getInactiveVillages() {
-    this.villageservice.GetallinactiveVillages().subscribe(
-      (data) => {
-        console.log("Inactive villages fetched:", data);
-        this.villages = data; // adjust the key based on API response
-      },
-      (error) => {
-        console.error("Error fetching inactive villages:", error);
-      }
-    );
-  }
+    getInactiveVillages() {
+      this.villageservice.GetallinactiveVillages().subscribe(
+        (data) => {
+          console.log("Inactive villages fetched:", data);
+          this.villages = data.sort(
+            
+          ); // adjust the key based on API response
+        },
+        (error) => {
+          console.error("Error fetching inactive villages:", error);
+        }
+      );
+    }
   
   navigateToVillage(village: any){
     this.selectedVillage = village;

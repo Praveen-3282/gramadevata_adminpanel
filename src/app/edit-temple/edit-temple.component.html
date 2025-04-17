@@ -7,10 +7,10 @@
 
     <form [formGroup]="updateTempleForm" class="p-5">
       <div class="row mt-5">
-        <h3 class="section-header-title text-center">Add a Temple</h3>
+        <h3 class="section-header-title text-center">Edit a Temple</h3>
       </div>
       <div class="temple-form-heading">
-        <h3>Temple details</h3>
+        
         <hr />
         <div class="row">
           <div class="col-md-4">
@@ -177,7 +177,7 @@
 
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="address">Total Address *</label>
               <textarea class="form-control" id="address" formControlName="address" placeholder="Total Address" rows="2"></textarea>
@@ -186,11 +186,15 @@
               </div>
             </div>
           </div>
+          
         </div>
 
 
+
+
+
         
-        <div class="row"  *ngIf="!InVillage">
+        <div class="row"  >
           <div class="col-md-4">
             <nz-form-item>
               <nz-form-control nzErrorTip="Please select a country">
@@ -206,7 +210,7 @@
               <nz-form-control nzErrorTip="State is required">
                 <label for="state">State*</label>
                 <nz-select formControlName="state" nzPlaceHolder="Select state" [nzShowSearch]="true" nzNotFoundContent="No data found">
-                  <nz-option *ngFor="let option of templeStateOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  <nz-option *ngFor="let option of templeStateOptions" [nzValue]="option.value"  [nzLabel]="option.label"></nz-option>
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
@@ -244,32 +248,46 @@
         </div>
   
 
-        <!-- <div >
-          <div class="row mt-2" >
-            <label>Temple Image *</label>
-            <div>
-              <nz-upload
-                nzListType="picture-card"
-                [(nzFileList)]="bannerFileList"
-                [nzMultiple]="true"
-                [nzShowButton]="bannerFileList.length < 10"
-                (nzChange)="handleBannerFileChange($event)"
-                [nzAccept]="'image/*'"
-                (nzRemove)="handleBannerFileRemove($event)"
-              >
-                <div >
-                  <i nz-icon nzType="plus"></i>
-                  Add Temple Images
-                </div>
-              </nz-upload>
+
+
+           <div class="profile-pic-container " formControlName="image_location" (click)="triggerFileInput()">
+            
+            <img  
+                 [src]="'data:image/jpg;base64,' + profileImage" 
+                 alt="Profile Picture" 
+                 class="profile-pic"
+                 (error)="onImageError($event)"
+                 />
+        
       
-              
+      
+            
+            <ng-template #defaultPic>
+              <div class="profile-pic-placeholder">
+                <span class="plus-icon">+</span>
+              </div>
+            </ng-template>
+            
+            <div class="overlay">
+              <span class="edit-icon">+</span>
             </div>
-          </div>
-      
-          
-          
-        </div> -->
+          </div> 
+        
+      <input
+            id="image_location"
+            type="file"
+            accept="image/*"
+            (change)="onFileChange($event)"
+            style="display: none;"
+            #fileInput
+          />
+        
+          <div *ngIf="updateTempleForm.controls['image_location'].invalid && updateTempleForm.controls['image_location'].touched" class="text-danger">
+            Profile Picture is required.
+          </div> 
+
+
+
         
         <div class="text-center">
           <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>

@@ -16,6 +16,10 @@ export class HeaderComponent {
   activeLink: string = '';
   user: any;
   userid: any;
+  profile_pic:any;
+  username:any;
+  profileImageUrl: string = '../../assets/profile1.png';
+  profileImageError: boolean =false
 
 
   private dialogRef: MatDialogRef<SignupComponent> | null = null;
@@ -26,11 +30,19 @@ export class HeaderComponent {
 
   
   ngOnInit(){
-
-
+    this.setProfileImage();
+    this.loadUser();
     // this.profiledata();
     this.getUserProfile();
     
+  }
+
+  setProfileImage(): void {
+    if (this.user && this.user.profile_pic) {
+      this.profileImageUrl = this.user.profile_pic;
+    } else {
+      this.profileImageUrl = '../../assets/profile1.png';
+    }
   }
 
 navigateTotemples(): void {
@@ -97,10 +109,26 @@ getUserProfile(): void {
 }
 
 
-handleProfileImageError(event: Event) {
-  const imgElement = event.target as HTMLImageElement;
-  imgElement.src = 'assets/profile1.png';
+// handleProfileImageError(event: Event) {
+//   const imgElement = event.target as HTMLImageElement;
+//   imgElement.src = 'assets/profile1.png';
+// }
+
+loadUser(): void {
+  // Fetch or assign your user object
+  this.user = {
+    full_name: 'John Doe',
+    profile_pic: 'https://example.com/image.jpg' // Or null/undefined
+  };
+
+  this.profileImageError = false; // Reset error on load
 }
+
+
+handleProfileImageError(): void {
+  this.profileImageError = true;
+}
+
 
 isSmallScreen = window.innerWidth < 992;
 
@@ -145,5 +173,12 @@ navigateTo(): void {
   } else {
     // this.userservice.showMemberModal();
   }
+}
+
+
+profiledata(){
+
+  this.profile_pic = localStorage.getItem('profile_pic')
+  this.username = localStorage.getItem('full_name')
 }
 }
