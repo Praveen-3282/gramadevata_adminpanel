@@ -46,7 +46,7 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label for="style">Temple Style </label>
+              <label for="style">Temple Style *</label>
               <select class="form-control" id="style" formControlName="style">
                 <option *ngFor="let option of templeStyleOptions" [value]="option.value">{{ option.label }}</option>
               </select>
@@ -186,7 +186,6 @@
               </div>
             </div>
           </div>
-          
         </div>
 
 

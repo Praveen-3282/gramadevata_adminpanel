@@ -29,15 +29,15 @@ import { GoshalaService } from '../services/goshala.service';
 })
 export class EditGoshalaComponent {
   updateGoshalaForm!: FormGroup;
-  templeData:any;
+  goshalaData:any;
   userId:any;
-  templeId: any;
+  goshalaId: any;
   bannerFileList: NzUploadFile[] = [];
   templeVillageOptions: any[] = [];
   village_id: any;
   templeCategoryOptions: any[] = [];
   templePriorityOptions: any[] = [];
-  templeStyleOptions: any[] = [];
+  goshalaStyleOptions: any[] = [];
   containsLocationDetails = false;
   countries: any;
   templeCountryOptions: any[] = [];
@@ -77,43 +77,33 @@ export class EditGoshalaComponent {
 
 
     
-    const templeId = this.route.snapshot.paramMap.get('id');
-    if (templeId) {
-      this.getTempleDetails(templeId);
+    const goshalaId = this.route.snapshot.paramMap.get('id');
+    if (goshalaId) {
+      this.getGoshalaDetails(goshalaId);
     }
-
-
-
     this.updateGoshalaForm = this.fb.group({
       
-      name: ['', Validators.required],
-      is_navagraha_established: [false],
-      construction_year: [],
-      is_destroyed: [false],
-      animal_sacrifice_status: [false],
-      diety: ['', Validators.required],
-      style: [''],
-      map_location: ['', Validators.required],
-      address: ['', Validators.required],
-      desc: [''],
-      contact_phone: ['', Validators.required],
-      contact_name: ['', Validators.required],
-      reg_num:['', Validators.required],
+      name:['',Validators.required],
+      reg_num:[''],
+      category: ['', [Validators.required]],
+      contact_name:['', [Validators.required]],
+      contact_phone: ['', [Validators.required,Validators.pattern('^[0-9]{10}$'),],],
+      desc:[''],
+      country: ['', [Validators.required]],
+      state: [{ value: '', disabled: true }, [Validators.required]],
+      district: [{ value: '', disabled: true }, [Validators.required]],
+      mandal: [{ value: '', disabled: true }, [Validators.required]],
+      object_id: [{ value: '', disabled: true }, [Validators.required]],
+      temple: null,
+      image_location:[' '],
+      address:['',Validators.required],
+      user:localStorage.getItem('user'),
       status: ['INACTIVE'],
-      image_location: ['', Validators.required],
-      category: ['', Validators.required],
-      priority: ['', Validators.required],
-      country: ['', Validators.required],
-      state: [{ value: '', disabled: true }, Validators.required],
-      district: [{ value: '', disabled: true }, Validators.required],
-      mandal: [{ value: '', disabled: true }, Validators.required],
-      object_id: [{ value: this.village_id, disabled: true }, Validators.required],
-      user: localStorage.getItem('user'),
+      map_location: ['', Validators.required],
+      goshalaId: this.route.snapshot.paramMap.get("id"),
 
-
-      
     
-     })
+    })
 
       if (this.village_id != null) {
         // Enable object_id before setting its value
@@ -246,15 +236,8 @@ export class EditGoshalaComponent {
     }
   });
 
-  this.templeStyleOptions = enumToMap(TempleStyle);
-  this.updateGoshalaForm.controls['style'].setValue('O');
-
-  this.formGroup = this.formBuilder.group({
-    templeIsNavagraha: ['']
-  });
+  
 }
-
-// Utility function to reset and disable form fields
 private resetFormFields(fields: string[]) {
   fields.forEach(field => {
     this.updateGoshalaForm.get(field)?.reset();
@@ -263,23 +246,21 @@ private resetFormFields(fields: string[]) {
 
   }
 
-  getTempleDetails(temple:string) {
+  getGoshalaDetails(goshala:string) {
 
-    this.goshalaService.Editbygoshalagetresponse(temple).subscribe((response:any) => {
-     this. updateGoshalaForm = this.fb.group({
+    this.goshalaService.Editbygoshalagetresponse(goshala).subscribe((response:any) => {
+     this. updateGoshalaForm .patchValue({
       name: response.name,
-      // temple_official_website: response.temple_official_website,
-      temple_timings: response.temple_timings,
+      
       image_location:response.image_location,
       status: response.status,
       desc: response.desc,
-      contact_email:response.contact_email,
+
       contact_phone:response.contact_phone,
       contact_name:response.contact_name,
       address: response.address,
       map_location:response.map_location,
-      diety: response.diety,
-      created_at: response.created_at,
+
       category:response.category,
       object_id:response.object_id,
       mandal:response.mandal,
@@ -288,18 +269,79 @@ private resetFormFields(fields: string[]) {
       country:response.country,
       reg_num: response.reg_num
 
-     })
+     }) ;
+
+     this.image_location = response.image_location;
+     if (this.image_location) {
+       this.convertToBase64(this.image_location)
+         .then(base64 => {
+           this.profileImage = base64;
+           this.updateGoshalaForm.patchValue({
+             image_location: base64
+           });
+         })
+         .catch(error => {
+           console.error("Error converting to base64:", error);
+         });
+     }
+    });
+  }
+
+  profileImage: string | ArrayBuffer | null = null;
+  image_location: any;
+
+  convertToBase64(url: string): Promise<string | ArrayBuffer | null> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          const cleanBase64 = base64String.replace(/^data:(application\/octet-stream|image\/[a-z]+);base64,/, '');
+          resolve(cleanBase64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.onerror = reject;
+      xhr.open('GET', url);
+      xhr.responseType = 'blob';
+      xhr.send();
+    });
+  }
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64StringWithPrefix = reader.result?.toString() || '';
+        const base64String = base64StringWithPrefix.split(',')[1];
+        this.profileImage = base64String;
+        this.updateGoshalaForm.patchValue({
+          image_location: base64String
+        });
+      };
+      reader.readAsDataURL(file);
     }
-  );
+  }
+  triggerFileInput() {
+    const fileInput = document.getElementById('image_location') as HTMLElement;
+    fileInput.click();
   }
   
+  onImageError(event: any) {
+    event.target.src = 'assets/profile1.webp'; 
+  }
+
+
   onSubmit(): void {
     console.log('Submit button clicked');
-    const templeId = this.route.snapshot.paramMap.get('templeId');
-    console.log('Temple ID:', templeId);
+    const goshalaId = this.route.snapshot.paramMap.get('id');
+    console.log('Goshala ID:', goshalaId);
 
-    if (templeId && this.templeData) {
-      this.templeService.updateTempleDetails(templeId, this.templeData).subscribe({
+    if (goshalaId && this.goshalaData) {
+      this.goshalaService.updateGoshalaDetails(goshalaId, this.goshalaData).subscribe({
         next: (response) => {
           console.log('Temple updated successfully!', response);
         },
@@ -418,9 +460,9 @@ private resetFormFields(fields: string[]) {
 
  
 
-  get deityList(): FormArray {
-    return this.updateGoshalaForm.get('deityList') as FormArray;
-  }
+  // get deityList(): FormArray {
+  //   return this.updateGoshalaForm.get('deityList') as FormArray;
+  // }
 
   get contactNumber() {
     return this.updateGoshalaForm.get('contact_phone');

@@ -26,4 +26,12 @@ export class EventService {
   Editbyeventresponse(_id:string):Observable<any>{
     return this.httpclient.get(URL+"event/"+ _id)
   }
+
+  updateevent(_id:string):Observable<any>{
+    return this.httpclient.get(URL+"events_inactive_get/_id/"+ _id)
+  }
+
+  getEventCategory():Observable<any>{
+    return this.httpclient.get(URL+"eventcategory")
+  }
 }

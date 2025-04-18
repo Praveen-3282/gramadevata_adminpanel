@@ -54,8 +54,8 @@ export class EventsComponent {
         this.selectedEvent = event;
       }
 
-      navigateeditevent(){
-        this.router.navigate(['edit_event'])
+      navigateeditevent( _id: string){
+        this.router.navigate(['edit_event',_id])
       }
 
 }

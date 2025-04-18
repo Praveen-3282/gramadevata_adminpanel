@@ -49,7 +49,8 @@ export class EditEventComponent {
 
     const eventId = this.route.snapshot.paramMap.get('id');
     if(eventId){
-      this.getEventDetails(eventId)
+      this.getEventDetails(eventId);
+      this.fetchallaCategories()
     }
 
     this.updateEventForm = this.fb.group({
@@ -217,7 +218,7 @@ export class EditEventComponent {
 
   getEventDetails(temple:string) {
 
-    this.templeService.updatetemple(temple).subscribe((response: any) => {
+    this.eventService.updateevent(temple).subscribe((response: any) => {
       const res = response[0];
     
       this.updateEventForm = this.fb.group({
@@ -263,7 +264,7 @@ export class EditEventComponent {
  }
  profileImage: string | ArrayBuffer | null = null;
  image_location: any;
-
+ 
  convertToBase64(url: string): Promise<string | ArrayBuffer | null> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -369,6 +370,28 @@ export class EditEventComponent {
         callback(base64String);
     };
     reader.readAsDataURL(file);
+  }
+
+
+  fetchallaCategories():void{
+    this.eventService.getEventCategory().subscribe(
+      (res) => {
+        res.forEach((category:any) =>{
+          this.eventCategoryoptions.push({
+            label:category.name,
+            value:category._id
+          })
+        })
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+  }
+
+
+  get contactNumber() {
+    return this.updateEventForm.get('contact_phone');
   }
 
 }
