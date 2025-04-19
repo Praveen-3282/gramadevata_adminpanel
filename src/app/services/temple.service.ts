@@ -84,4 +84,9 @@ export class TempleService {
     return this.httpclient.get(URL+"templeCategeory")
   }
   
+
+
+
+
+  
 }

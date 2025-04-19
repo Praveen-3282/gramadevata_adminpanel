@@ -1,7 +1,6 @@
-<nav class="navbar navbar-expand-lg py-2 bg-light fixed-top" style="z-index: 1;">
+<!-- <nav class="navbar navbar-expand-lg py-2 bg-light fixed-top" style="z-index: 1;">
     <div class="container" style="padding-top: 30px;">
       <h4 style="color: brown;">Gramadevata_AdminPanel</h4>
-      <!-- Tabs -->
       <ul class="nav nav-tabs " style="gap: 20px; list-style: none; padding-right: 400px; ">
         <li class="nav-item">
           <a class="nav-link "
@@ -28,10 +27,7 @@
         </li>
       </ul>
   
-      <!-- Signup Button -->
-      <!-- <button class="btn btn-primary ms-auto" (click)="signup()">
-        Signup
-      </button> -->
+
       <div *ngIf="!authenticationService.isLoggedIn;" class="nav-item-container d-flex flex-column hide-on-medium">
         <li class="nav-item">
             <a data-bs-dismiss="offcanvas" id="signUp" [ngClass]="getButtonClasses()" (click)="openSignupDialog()" style="color: white; background-color: orange;">Sign In</a>
@@ -43,11 +39,11 @@
             <li class="nav-item dropdown">
                 <a class="nav-link d-flex flex-column align-items-center text-center" href="#" id="navbarDropdown" 
                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- <img [src]="user.profile_pic || '../../assests/profile1.png'"
+                    <img [src]="user.profile_pic || '../../assests/profile1.png'"
                          class="rounded-circle"
                          [ngStyle]="{ 'height': '35px', 'width': '35px', 'margin-top': '-10px', }"
                          alt="Profile image"
-                         (error)="handleProfileImageError($event)"> -->
+                         (error)="handleProfileImageError($event)">
                     <span class="mt-1">{{user.full_name}}</span>
                 </a>
     
@@ -62,6 +58,161 @@
             </li>
         </ul>
     </div>
+    </div>
+  </nav>
+   -->
+
+
+
+   <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-2" style="z-index: 1;">
+    <div class="container">
+      <h6 class="mb-0 text-brown">Gramadevata_AdminPanel</h6>
+  
+      <ul class="nav nav-tabs ms-lg-5 gap-3">
+        <li class="nav-item">
+          <a class="nav-link"
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'temples' }"
+             (click)="navigateTotemples()">Temples</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'goshalas' }"
+             (click)="navigategoshala()">Goshalas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'events' }"
+             (click)="navigateevents()">Events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             [ngClass]="{ 'active custom-active-tab': activeLink === 'villages' }"
+             (click)="navigatevillages()">Villages</a>
+        </li>
+      </ul>
+  
+      <div class="d-flex align-items-center ms-auto">
+        <ng-container *ngIf="!authenticationService.isLoggedIn; else loggedInBlock">
+          <li class="nav-item list-unstyled">
+            <a class="btn btn-warning text-white"
+               data-bs-dismiss="offcanvas"
+               id="signUp"
+               [ngClass]="getButtonClasses()"
+               (click)="openSignupDialog()">
+              Sign In
+            </a>
+          </li>
+        </ng-container>
+  
+        <ng-template #loggedInBlock>
+          <ul class="navbar-nav ms-3">
+            <li class="nav-item dropdown">
+              <a class="nav-link d-flex flex-column align-items-center text-center"
+                 href="#"
+                 id="navbarDropdown"
+                 role="button"
+                 data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                <img [src]="user.profile_pic || '../../assests/profile1.png'"
+                     class="rounded-circle"
+                     style="height: 35px; width: 35px; margin-top: -10px;"
+                     alt="Profile image"
+                     (error)="handleProfileImageError($event)">
+                <span class="mt-1">{{user.full_name}}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item"
+                     (click)="navigateTo()"
+                     routerLinkActive="active">View Profile</a>
+                </li>
+                <li>
+                  <a class="dropdown-item"
+                     (click)="doLogout()"
+                     routerLinkActive="active">Logout</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+   -->
+
+
+
+
+   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-2" style="z-index: 1;">
+    <div class="container d-flex justify-content-between align-items-center">
+      
+      <h4 class="mb-0 text-brown">Gramadevata_AdminPanel</h4>
+  
+      <div class="d-flex align-items-center gap-4">
+  
+        <ul class="nav  gap-3 mb-0">
+          <li class="nav-item">
+            <a class="nav-link"
+               [ngClass]="{ 'active custom-active-tab': activeLink === 'temples' }"
+               (click)="navigateTotemples()">Temples</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+               [ngClass]="{ 'active custom-active-tab': activeLink === 'goshalas' }"
+               (click)="navigategoshala()">Goshalas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+               [ngClass]="{ 'active custom-active-tab': activeLink === 'events' }"
+               (click)="navigateevents()">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+               [ngClass]="{ 'active custom-active-tab': activeLink === 'villages' }"
+               (click)="navigatevillages()">Villages</a>
+          </li>
+        </ul>
+  
+        <ng-container *ngIf="!authenticationService.isLoggedIn; else loggedInBlock">
+          <a class="btn btn-warning text-white"
+             data-bs-dismiss="offcanvas"
+             id="signUp"
+             [ngClass]="getButtonClasses()"
+             (click)="openSignupDialog()">
+            Sign In
+          </a>
+        </ng-container>
+  
+        <ng-template #loggedInBlock>
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link d-flex flex-column align-items-center text-center"
+                 href="#"
+                 id="navbarDropdown"
+                 role="button"
+                 data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                <img [src]="user.profile_pic || '../../assests/profile1.png'"
+                     class="rounded-circle"
+                     style="height: 35px; width: 35px; margin-top: -10px;"
+                     alt="Profile image"
+                     (error)="handleProfileImageError($event)">
+                <span class="mt-1">{{user.full_name}}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" (click)="navigateTo()" routerLinkActive="active">View Profile</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" (click)="doLogout()" routerLinkActive="active">Logout</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </ng-template>
+  
+      </div> 
+  
     </div>
   </nav>
   

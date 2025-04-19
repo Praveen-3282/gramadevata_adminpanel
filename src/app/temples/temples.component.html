@@ -1,106 +1,282 @@
-<div class="container-fluid mx-3 p-4 border rounded" style=" margin-top: 100px; min-height:800px; width: 1643px;">
-  <div class="row">
 
+
+
+
+
+<div class="container-fluid my-4 p-4 border rounded " style="min-height: 100vh; display: flex; flex-direction: column;">
   
-    <div class="col-md-3 border-end d-flex flex-column">
-      <h5>Temples</h5>
-      <hr>
-      
+  <!-- Fixed Header Part (Non-Scrolling) -->
+  <div class="mb-3">
+    <h4 class="mt-5"></h4>
+    <!-- or your navbar, title, or any info -->
+  </div>
 
-      <div class="overflow-auto" style="max-height: 680px;">
-        <ul class="list-unstyled">
-          <li *ngFor="let temple of temples" class="mb-2">
-            <button class="btn w-100 d-flex align-items-center"
-              [ngClass]="{
-                'btn-outline-primary': selectedTemple !== temple,
-                'btn-primary': selectedTemple === temple
-              }"
-              (click)="selectTemple(temple)"
-            >
-              <img
-                [src]="temple.image_location"
-                alt="temple logo"
-                width="30"
-                height="30"
-                class="me-2 rounded-circle"
-              />
-              {{ temple.name }}
-            </button>
-          </li>
+  <!-- Scrollable Content Part -->
+  <div class="flex-grow-1 overflow-auto hide-scrollbar">
+    <div class="row gx-3 gy-4">
+
+
+
+      <div class="">
+
+        <div class="">
           
-        </ul>
-      </div>
-      
-    </div>
-
-
-    <div class="col-md-5 border-end d-flex flex-column">
-      <h5>Temple Category</h5>
-      <hr>
-      <div class="overflow-auto" style="max-height: 680px;">
-        <div *ngIf="selectedTemple">
-          <div class="d-flex justify-content-center">
-            <img [src]="selectedTemple.image_location" [alt]="selectedTemple.name"
-                 class="img-fluid rounded" style="height: 300px; width: 300px;">
-          </div>
-          <div class="mt-3">
-            <h6 class="text-center">{{ selectedTemple.name }}</h6>
-            <p><strong>Contact Name:</strong> {{ selectedTemple.contact_name }}</p>
-            <p><strong>Address:</strong> {{ selectedTemple.address }}</p>
-            <p><strong>Construction Year:</strong> {{ selectedTemple.construction_year }}</p>
-            <p><strong>Deity:</strong> {{ selectedTemple.diety }}</p>
-            <p><strong>Contact Number:</strong> {{ selectedTemple.contact_phone }}</p>
-            <p><strong>Timings:</strong> {{ selectedTemple.temple_timings }}</p>
-            <p><strong>Official Website:</strong> {{ selectedTemple.temple_official_website }}</p>
-            <p><strong>Map Location:</strong>
-              <a [href]="selectedTemple.temple_map_location" target="_blank">View on Map</a>
-            </p>
-            <p><strong>Description:</strong> {{ selectedTemple.desc }}</p>
-
-
-            
-            <div class="text-center">
-              <!-- <button class="btn btn-sm btn-outline-secondary ms-2" (click)="editTemple(selectedTemple._id)" >
-                Edit
-              </button> -->
-
-              <button (click)="editTemple(selectedTemple._id)" class="p-2 m-2 mr-5" style="border: 1px solid rgb(238, 141, 51); background-color: rgb(238, 141, 51); border-radius: 25px; color: black; width: 130px; height: 50px; font-size: 18px;">
-                <!-- <i class="fas fa-calendar-alt faicon"></i> -->
-                Edit
-            </button>
-            </div>
-            
-          </div>
-        </div>
-        <div *ngIf="!selectedTemple">
-          <p>Select a temple to view its image and details</p>
-        </div>
-      </div>
-    </div>
-
- 
-    <div class="col-md-4 border-end d-flex flex-column">
-      <h5>Near by Temples</h5>
-      <hr>
-      <div class="overflow-auto" style="max-height: 680px;">
-        <ul class="list-unstyled">
-          <li *ngFor="let temple of nearbytemples" class="mb-2">
-            
-            <div class="d-flex justify-content-between align-items-center" (click)="selectTemple(temple)">
-              <div class=" btn btn-outline-primary w-100 d-flex align-items-center me-2" >
-                <img [src]="temple.image_location" alt="temple logo" width="30" height="30" class="me-2 rounded-circle" />
-                {{ temple.name }}
+          <form [formGroup]="validatorForm">
+            <div class="d-flex flex-wrap gap-3 align-items-start">
+          
+              <!-- COUNTRY -->
+              <div class="flex-grow-1 position-relative" style="min-width: 200px;">
+                <nz-form-item class="mb-0">
+                  <nz-form-control nzErrorTip="Please select a Country">
+                    <nz-select formControlName="country"
+                               nzPlaceHolder="Select Country Temples"
+                               nzNotFoundContent="No data found"
+                               [nzShowSearch]="true">
+                      <nz-option *ngFor="let option of CountryOptions"
+                                 [nzValue]="option.value"
+                                 [nzLabel]="option.label" />
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
               </div>
-              <button class="btn btn-sm btn-outline-secondary ms-2" (click)="editTemple(temple._id)">
-                Edit
-              </button>
+          
+              <!-- STATE -->
+              <div class="flex-grow-1 position-relative" style="min-width: 200px;">
+                <nz-form-item class="mb-0">
+                  <nz-form-control nzErrorTip="Please select a State">
+                    <nz-select formControlName="state"
+                               nzPlaceHolder="Select State Temples"
+                               nzNotFoundContent="No data found"
+                               [nzShowSearch]="true"
+                               (ngModelChange)="onStateSelect($event)">
+                      <nz-option *ngFor="let option of StateOptions"
+                                 [nzValue]="option.value"
+                                 [nzLabel]="option.label" />
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+          
+                <!-- Close Button inside the field -->
+                <button *ngIf="validatorForm.controls['state'].value"
+                        type="button"
+                        class="btn position-absolute p-0"
+                        style="top: 8px; right: 10px; background: transparent; border: none;"
+                        (click)="clearState()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          
+              <!-- DISTRICT -->
+              <div class="flex-grow-1 position-relative" style="min-width: 200px;">
+                <nz-form-item class="mb-0">
+                  <nz-form-control nzErrorTip="Please select a District">
+                    <nz-select formControlName="district"
+                               nzPlaceHolder="Select District Temples"
+                               nzNotFoundContent="No data found"
+                               [nzShowSearch]="true"
+                               (ngModelChange)="onDistrictSelect($event)">
+                      <nz-option *ngFor="let option of DistrictOptions"
+                                 [nzValue]="option.value"
+                                 [nzLabel]="option.label" />
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+          
+                <button *ngIf="validatorForm.controls['district'].value"
+                        type="button"
+                        class="btn position-absolute p-0"
+                        style="top: 8px; right: 10px; background: transparent; border: none;"
+                        (click)="cleardistrict()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          
+              <!-- MANDAL -->
+              <div class="flex-grow-1 position-relative" style="min-width: 200px;">
+                <nz-form-item class="mb-0">
+                  <nz-form-control nzErrorTip="Please select a Mandal">
+                    <nz-select formControlName="mandal"
+                               nzPlaceHolder="Select Mandal Temples"
+                               nzNotFoundContent="No data found"
+                               [nzShowSearch]="true"
+                               (ngModelChange)="onBlockSelect($event)">
+                      <nz-option *ngFor="let option of MandalOptions"
+                                 [nzValue]="option.value"
+                                 [nzLabel]="option.label" />
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+          
+                <button *ngIf="validatorForm.controls['mandal'].value"
+                        type="button"
+                        class="btn position-absolute p-0"
+                        style="top: 8px; right: 10px; background: transparent; border: none;"
+                        (click)="clearmandal()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          
+              <!-- VILLAGE -->
+              <div class="flex-grow-1 position-relative" style="min-width: 200px;">
+                <nz-form-item class="mb-0">
+                  <nz-form-control nzErrorTip="Please select a Village">
+                    <nz-select formControlName="village"
+                               nzPlaceHolder="Select Village Temples"
+                               nzNotFoundContent="No data found"
+                               [nzShowSearch]="true"
+                               (ngModelChange)="onVillageSelect($event)">
+                      <nz-option *ngFor="let option of VillageOptions"
+                                 [nzValue]="option.value"
+                                 [nzLabel]="option.label" />
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+          
+                <button *ngIf="validatorForm.controls['village'].value"
+                        type="button"
+                        class="btn position-absolute p-0"
+                        style="top: 8px; right: 10px; background: transparent; border: none;"
+                        (click)="clearvillage()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          
+              <!-- RESET BUTTON -->
+              <div>
+                <button type="button"
+                        (click)="onReset()"
+                        class="btn btn-primary px-4 text-white"
+                        style="background-color: orange; border-color: orange;">
+                  Reset
+                </button>
+              </div>
+          
             </div>
-            
-          </li>
-        </ul>
+          </form>
+          
+        
+        
+        
+        </div>
       </div>
-      
-    </div>
 
+
+
+
+
+
+
+      <div class="col-12 col-md-3 border-end d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Temples</h5>
+        
+          <nz-select
+            class="custom-height"
+            style="width: 250px;"
+            nzPlaceHolder="Select Deity Category"
+            nzNotFoundContent="No data found"
+            [nzShowSearch]="true"
+            [(ngModel)]="selectedCategoryId"
+            (ngModelChange)="onSelectCategory($event)"
+          >
+            <nz-option 
+              *ngFor="let option of CategoryOptions"
+              [nzValue]="option.value"
+              [nzLabel]="option.label">
+            </nz-option>
+          </nz-select>
+        </div>
+        
+        
+        <hr>
+        <div class="overflow-auto flex-grow-1" style="max-height: calc(100vh - 270px);">
+          <ul class="list-unstyled">
+            <li *ngFor="let temple of globaltemples" class="mb-2">
+              <button class="btn w-100 d-flex align-items-center"
+                [ngClass]="{
+                  'btn-outline-primary': selectedTemple !== temple,
+                  'btn-primary': selectedTemple === temple
+                }"
+                (click)="selectTemple(temple)">
+                <img [src]="temple.image_location[0] ? temple.image_location[0] : 'assets/ohm.jpg'"alt="temple logo" width="30" height="30"
+                  class="me-2 rounded-circle" (error)="handleProfileImageError($event)" />
+                {{ temple.name }}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Temple Details -->
+      <div class="col-12 col-md-5 border-end d-flex flex-column">
+        <h5>Temple Category</h5>
+        <hr>
+        <div class="overflow-auto flex-grow-1" style="max-height: calc(100vh - 270px);">
+          <div *ngIf="selectedTemple">
+            <div class="d-flex justify-content-center">
+              <img [src]="selectedTemple.image_location[0]" [alt]="selectedTemple.name"
+                class="img-fluid rounded" style="max-width: 100%; height: auto; max-height: 300px;">
+            </div>
+            <div class="mt-3">
+              <h6 class="text-center">{{ selectedTemple.name }}</h6>
+              <p><strong>Contact Name:</strong> {{ selectedTemple.contact_name }}</p>
+              <p><strong>Address:</strong> {{ selectedTemple.address }}</p>
+              <p><strong>Construction Year:</strong> {{ selectedTemple.construction_year }}</p>
+              <p><strong>Deity:</strong> {{ selectedTemple.diety }}</p>
+              <p><strong>Contact Number:</strong> {{ selectedTemple.contact_phone }}</p>
+              <p><strong>Timings:</strong> {{ selectedTemple.temple_timings }}</p>
+              <p><strong>Official Website:</strong> {{ selectedTemple.temple_official_website }}</p>
+              <p><strong>Map Location:</strong> <a [href]="selectedTemple.temple_map_location" target="_blank">View on Map</a></p>
+              <p><strong>Description:</strong> {{ selectedTemple.desc }}</p>
+              <div class="text-center">
+                <button (click)="editTemple(selectedTemple._id)"
+                  class="btn"
+                  style="border: 1px solid rgb(238, 141, 51); background-color: rgb(238, 141, 51); border-radius: 25px; color: black; width: 130px; height: 50px; font-size: 18px;">
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!selectedTemple" class="d-flex justify-content-center align-items-center" style="height:100%;">
+            <p class="text-center mb-0">Select a temple to view its image and details</p>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Nearby Temples -->
+      <div class="col-12 col-md-4 d-flex flex-column">
+        <h5>Near by Temples</h5>
+        <hr>
+        <div class="overflow-auto flex-grow-1" style="max-height: calc(100vh - 270px);">
+          <ul class="list-unstyled">
+            <li *ngFor="let temple of nearbytemples" class="mb-2">
+              <div class="d-flex justify-content-between align-items-center" (click)="selectTemple(temple)">
+                <div class="btn btn-outline-primary w-100 d-flex align-items-center me-2">
+                  <img [src]="temple.image_location" alt="temple logo" width="30" height="30"
+                    class="me-2 rounded-circle" />
+                  {{ temple.name }}
+                </div>
+                <button class="btn btn-sm btn-outline-secondary ms-2" (click)="editTemple(temple._id); $event.stopPropagation();">
+                  Edit
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+

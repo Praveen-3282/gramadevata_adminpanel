@@ -109,10 +109,10 @@ getUserProfile(): void {
 }
 
 
-// handleProfileImageError(event: Event) {
-//   const imgElement = event.target as HTMLImageElement;
-//   imgElement.src = 'assets/profile1.png';
-// }
+handleProfileImageError(event: Event) {
+  const imgElement = event.target as HTMLImageElement;
+  imgElement.src = 'assets/profile1.webp';
+}
 
 loadUser(): void {
   // Fetch or assign your user object
@@ -125,9 +125,9 @@ loadUser(): void {
 }
 
 
-handleProfileImageError(): void {
-  this.profileImageError = true;
-}
+// handleProfileImageError(): void {
+//   this.profileImageError = true;
+// }
 
 
 isSmallScreen = window.innerWidth < 992;
