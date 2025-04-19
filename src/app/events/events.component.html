@@ -1,0 +1,106 @@
+<div class="container-fluid mx-3 p-4 border rounded" style=" margin-top: 100px; min-height:800px; width: 1643px;">
+    <div class="row">
+  
+    
+      <div class="col-md-3 border-end d-flex flex-column">
+        <h5>Past Events</h5>
+        <hr>
+        <div class="overflow-auto" style="max-height: 680px;">
+          <ul class="list-unstyled">
+            <li *ngFor="let event of events" class="mb-2">
+              <button class="btn w-100 d-flex align-items-center"
+              [ngClass]="{
+                'btn-outline-primary': selectedEvent !== event,
+                'btn-primary': selectedEvent === event
+              }"
+                (click)="onEventClick(event)"
+              >
+                <img
+                  [src]="event.image_location"
+                  alt="temple logo"
+                  width="30"
+                  height="30"
+                  class="me-2 rounded-circle"
+                />
+                {{ event.name }}
+              </button>
+            </li>
+
+            
+          
+            <ng-template #noEvents>
+              <div class="alert alert-info" role="alert">
+                No inactive events found.
+              </div>
+            </ng-template>
+          </ul>
+      </div>
+        
+      </div>
+  
+  
+      <div class="col-md-3 border-end d-flex flex-column">
+        <h5>Upcoming Events</h5>
+        <hr>
+        <div class="overflow-auto" style="max-height: 680px;">
+          <ul class="list-unstyled">
+            <li *ngFor="let event of upcomingevents" class="mb-2">
+              <button class="btn w-100 d-flex align-items-center"
+              [ngClass]="{
+                'btn-outline-primary': selectedEvent !== event,
+                'btn-primary': selectedEvent === event
+              }"
+                (click)="onEventClick(event)"
+              >
+                <img
+                  [src]="event.image_location"
+                  alt="temple logo"
+                  width="30"
+                  height="30"
+                  class="me-2 rounded-circle"
+                />
+                {{ event.name }}
+              </button>
+            </li>
+
+            
+          
+            <ng-template #noEvents>
+              <div class="alert alert-info" role="alert">
+                No inactive events found.
+              </div>
+            </ng-template>
+          </ul>
+      </div>
+        
+        
+      </div>
+  
+      <div class="col-md-6 border-end d-flex flex-column">
+        <div class="overflow-auto" style="max-height: 780px;">
+          <div class="mt-4" *ngIf="selectedEvent">
+            <div class="card d-flex justify-content-center">
+              <img [src]="selectedEvent.image_location" class="card-img-top" alt="{{ selectedEvent.name }}" style="height: 300px; width: 300px; ">
+              <div class="card-body">
+                <h5 class="card-title">{{ selectedEvent.name }}</h5>
+                <p><strong>Contact Name:</strong> {{ selectedEvent.contact_name }}</p>
+                <p><strong>Contact Number:</strong> {{ selectedEvent.contact_phone }}</p>
+                <p><strong>Contact Email:</strong> {{ selectedEvent.contact_email }}</p>
+                <p><strong>Start Date:</strong> {{ selectedEvent.start_date }}</p>
+                <p><strong>Start Time:</strong> {{ selectedEvent.start_time }}</p>
+                <p><strong>End Date:</strong> {{ selectedEvent.end_date }}</p>
+                <p><strong>End Time:</strong> {{ selectedEvent.end_time }}</p>
+                <p><strong>Map Location:</strong> {{ selectedEvent.map_location }}</p>
+                <p><strong>Address:</strong> {{ selectedEvent.address }}</p>
+                <p><strong>Description:</strong> {{ selectedEvent.desc }}</p>
+                <!-- Add more event details here as needed -->
+                <button class="btn btn-secondary mt-2" (click)="navigateeditevent(selectedEvent._id)">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  
+    </div>
+  </div>

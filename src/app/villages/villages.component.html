@@ -1,0 +1,74 @@
+<div class="container-fluid mx-3 p-4 border rounded" style=" margin-top: 100px; min-height:800px; width: 1643px;">
+    <div class="row">
+  
+      <div class="col-md-6 border-end d-flex flex-column">
+        <h5>Villages</h5>
+        <hr>
+        <div class="overflow-auto" style="max-height: 680px;">
+          <ul class="list-unstyled">
+            <li *ngFor="let village of villages" class="mb-2">
+              <button class="btn w-100 d-flex align-items-center"
+              [ngClass]="{
+                'btn-outline-primary': selectedVillage !== village,
+                'btn-primary': selectedVillage === village
+              }"
+                (click)="navigateToVillage(village)"
+              >
+                <img
+                  [src]="village.image_location"
+                  alt="temple logo"
+                  width="30"
+                  height="30"
+                  class="me-2 rounded-circle"
+                />
+                {{ village.name }}
+              </button>
+            </li>
+            <ng-template #noEvents>
+              <div class="alert alert-info" role="alert">
+                No inactive events found.
+              </div>
+            </ng-template>
+          </ul>
+      </div>
+     
+        
+      </div>
+  
+  
+     
+  
+      <div class="col-md-6 border-end d-flex flex-column">
+        <div class="overflow-auto" style="max-height: 780px;">
+            <div class="mt-4 d-flex justify-content-center" *ngIf="selectedVillage">
+                <div class="card" style="width: 100%; max-width: 400px;">
+                  <img [src]="selectedVillage.image_location" class="card-img-top mx-auto d-block mt-3" alt="{{ selectedVillage.name }}" style="height: 300px; width: 300px; object-fit: cover;">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">{{ selectedVillage.name }}</h5>
+                    <p><strong>District:</strong> {{ selectedVillage.district }}</p>
+                    <p><strong>State:</strong> {{ selectedVillage.state }}</p>
+                    <p><strong>Country:</strong> {{ selectedVillage.country }}</p>
+                    <p><strong>Map Location:</strong> {{ selectedVillage.mapUrl }}</p>
+                    <p><strong>Pin Code:</strong> {{ selectedVillage.pin_code }}</p>
+                    <p><strong>Description:</strong> {{ selectedVillage.desc }}</p>
+
+                    <div class="row" style="justify-content: center;">
+                        <button (click)="navigateToVilage()" class="p-2 m-2 mr-5" style="border-width: 1px;background-color:rgb(238, 141, 51);border-radius: 25px;color:black;width:100px;height: 45px;font-size:18px;">
+                            <i class=""></i>
+                            Edit
+                        </button>
+                        <button  class="p-2 m-2 mr-5" style="border-width: 1px;background-color:rgb(238, 141, 51);border-radius: 25px;color:black;width:100px;height: 45px;font-size:18px;">
+                            <i class=""></i>
+                            Submit
+                        </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+        </div>
+      </div>
+
+  
+    </div>
+  </div>
