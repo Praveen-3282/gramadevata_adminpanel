@@ -19,6 +19,7 @@ export const routes: Routes = [
     {path: 'events', component: EventsComponent},
     {path: 'goshalas', component: GoshalasComponent},
     {path: 'edit_temple/:id', component: EditTempleComponent},
+    // { path: 'edit-temple', component: EditTempleComponent },
     {path: 'villages', component: VillagesComponent},
     // {path: " editgoshala/:id", component: EditGoshalaComponent},
     {path:'editgoshala/:id',component:EditGoshalaComponent},

@@ -1,1 +1,136 @@
-<p style="margin-top: 100px;">edit-village works!</p>
+<div class="container py-4 header-m" translate="no">
+    <div class="form-card">
+      <!-- <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+			type="ball-spin-clockwise">
+		</ngx-spinner> -->
+      <form [formGroup]="updateVillageForm" class="p-5">
+        <div class="row mt-5">
+          <h3 class="section-header-title text-center">Update Village</h3>
+        </div>
+        <div class="temple-form-heading">
+          <h3>Village details</h3>
+          <hr />
+          <div class="row">
+            
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="templeName">Village Name *</label>
+                <input type="text" class="form-control" id="templeName" formControlName="name" placeholder="Enter the Village's Name">
+                <div *ngIf="updateVillageForm.get('name')?.invalid && (updateVillageForm.get('name')?.dirty || updateVillageForm.get('name')?.touched)" class="text-danger">
+                  Village name is required
+                </div>
+              </div>
+            </div>
+         <div class="col-md-4">
+            <div class="form-group">
+                <label for="templeName">Pincode *</label>
+                <input type="text" class="form-control" id="templeName" formControlName="pin_code" placeholder="Enter the Pincode">
+                <div *ngIf="updateVillageForm.get('pin_code')?.invalid && (updateVillageForm.get('pin_code')?.dirty || updateVillageForm.get('pin_code')?.touched)" class="text-danger">
+                  Pincode is required
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="templeType">Type *</label>
+              <select class="form-control" id="templeType" formControlName="type">
+                <option value="VILLAGE">VILLAGE</option>
+                <option value="AREA">AREA</option>
+              </select>
+            </div>
+          </div>
+          
+        </div>
+            
+
+
+ 
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="desc">About the Village</label>
+                <textarea class="form-control" id="desc" formControlName="desc" placeholder="Describe about the temple in less than 4500 words" rows="5"></textarea>
+                <div *ngIf="updateVillageForm.get('desc')?.invalid && (updateVillageForm.get('desc')?.dirty || updateVillageForm.get('desc')?.touched)" class="text-danger">
+                  
+                  <div *ngIf="updateVillageForm.get('desc')?.errors?.['maxlength']">Description cannot be more than 4500 words</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please select a country">
+                  <label for="country">Country</label>
+                  <nz-select formControlName="country" nzPlaceHolder="Select Country" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeCountryOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="State is required">
+                  <label for="state">State</label>
+                  <nz-select formControlName="state" nzPlaceHolder="Select State" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeStateOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="District is required">
+                  <label for="district">District</label>
+                  <nz-select formControlName="district" nzPlaceHolder="Select District" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeDistrictOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Mandal is required">
+                  <label for="mandal">Mandal</label>
+                  <nz-select formControlName="block" nzPlaceHolder="Select Mandal" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeMandalOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-md-4">
+              <label>Banner image *</label>
+              <nz-upload
+                nzListType="picture-card"
+                [(nzFileList)]="bannerFileList"
+                [nzShowButton]="bannerFileList.length < 1"
+                (nzChange)="handleBannerFileChange($event)"
+                [nzAccept]="'image/*'"
+                (nzRemove)="handleBannerFileRemove()">
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  Upload banner
+                </div>
+              </nz-upload>
+              <div *ngIf="!bannerFileList.length" class="text-danger">
+                Image is required.
+              </div>
+            </div>
+          </div> -->
+
+          
+          
+          <div class="text-center">
+            <button type="button"  style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

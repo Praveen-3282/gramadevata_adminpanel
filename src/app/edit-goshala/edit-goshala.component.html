@@ -5,7 +5,7 @@
 <div class="container py-4 header-m mt-5 " translate="no">
     <div class="form-card">
   
-      <form [formGroup]="updateGoshalaForm" class="p-5">
+      <form [formGroup]="updateGoshalaForm" (ngSubmit)="onSubmit()" class="p-5">
         <div class="row mt-5">
           <h3 class="section-header-title text-center">Update Goshala</h3>
         </div>
@@ -212,35 +212,44 @@
               </nz-form-item>
             </div>
           </div>
-    
-  
-          <div >
-            <div class="row mt-2" >
-              <label>Temple Image *</label>
-              <div>
-                <nz-upload
-                  nzListType="picture-card"
-                  [(nzFileList)]="bannerFileList"
-                  [nzMultiple]="true"
-                  [nzShowButton]="bannerFileList.length < 10"
-                  (nzChange)="handleBannerFileChange($event)"
-                  [nzAccept]="'image/*'"
-                  (nzRemove)="handleBannerFileRemove($event)"
-                >
-                  <div >
-                    <i nz-icon nzType="plus"></i>
-                    Add Temple Images
-                  </div>
-                </nz-upload>
+
+          <div class="profile-pic-container " formControlName="image_location" (click)="triggerFileInput()">
+            
+            <img  
+                 [src]="'data:image/jpg;base64,' + profileImage" 
+                 alt="Profile Picture" 
+                 class="profile-pic"
+                 (error)="onImageError($event)"
+                 />
         
-                
+      
+      
+            
+            <ng-template #defaultPic>
+              <div class="profile-pic-placeholder">
+                <span class="plus-icon">+</span>
               </div>
+            </ng-template>
+            
+            <div class="overlay">
+              <span class="edit-icon">+</span>
             </div>
+          </div> 
         
-            
-            
-          </div>
-          
+      <input
+            id="image_location"
+            type="file"
+            accept="image/*"
+            (change)="onFileChange($event)"
+            style="display: none;"
+            #fileInput
+          />
+        
+          <div *ngIf="updateGoshalaForm.controls['image_location'].invalid && updateGoshalaForm.controls['image_location'].touched" class="text-danger">
+            Profile Picture is required.
+          </div> 
+
+
           <div class="text-center">
             <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
           </div>

@@ -23,15 +23,21 @@ export class EventService {
     return this.httpclient.get(URL+"events_inactive")
   }
  
-  Editbyeventresponse(_id:string):Observable<any>{
-    return this.httpclient.get(URL+"event/"+ _id)
-  }
+  // Editbyeventresponse(_id:string):Observable<any>{
+  //   return this.httpclient.get(URL+"event/"+ _id)
+  // }
 
   updateevent(_id:string):Observable<any>{
     return this.httpclient.get(URL+"events_inactive_get/_id/"+ _id)
   }
 
+  
   getEventCategory():Observable<any>{
     return this.httpclient.get(URL+"eventcategory")
+  }
+
+  updateEventDetails(eventId: string, eventData: any): Observable<any> {
+    const updateUrl = `${URL}event/${eventId}`;  
+    return this.httpclient.put(updateUrl, eventData);
   }
 }

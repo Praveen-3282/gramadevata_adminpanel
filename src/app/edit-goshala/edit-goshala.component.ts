@@ -335,13 +335,41 @@ private resetFormFields(fields: string[]) {
   }
 
 
+  // onSubmit(): void {
+  //   console.log('Submit button clicked');
+  //   const goshalaId = this.route.snapshot.paramMap.get('id');
+  //   console.log('Goshala ID:', goshalaId);
+
+  //   if (goshalaId && this.goshalaData) {
+  //     this.goshalaService.updateGoshalaDetails(goshalaId, this.goshalaData).subscribe({
+  //       next: (response) => {
+  //         console.log('Temple updated successfully!', response);
+  //       },
+  //       error: (error) => {
+  //         console.error('Error updating temple', error);
+  //       }
+  //     });
+  //   } else {
+  //     console.warn('Temple ID or data is missing');
+  //   }
+  // }
+
+
   onSubmit(): void {
     console.log('Submit button clicked');
+    if (this.updateGoshalaForm.invalid) {
+      console.warn('Form is invalid', this.updateGoshalaForm.errors);
+      this.updateGoshalaForm.markAllAsTouched(); // highlight errors
+      return;
+    }
+  
     const goshalaId = this.route.snapshot.paramMap.get('id');
     console.log('Goshala ID:', goshalaId);
-
-    if (goshalaId && this.goshalaData) {
-      this.goshalaService.updateGoshalaDetails(goshalaId, this.goshalaData).subscribe({
+  
+    const formValue = this.updateGoshalaForm.getRawValue(); // Get values including disabled fields
+  
+    if (goshalaId && formValue) {
+      this.goshalaService.updateGoshalaDetails(goshalaId, formValue).subscribe({
         next: (response) => {
           console.log('Temple updated successfully!', response);
         },
@@ -353,6 +381,7 @@ private resetFormFields(fields: string[]) {
       console.warn('Temple ID or data is missing');
     }
   }
+  
   
 
   getCurrentLocation() {

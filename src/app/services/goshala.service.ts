@@ -44,9 +44,9 @@ export class GoshalaService {
     return this.httpclient.get(URL+"goshala/"+ _id)
   }
 
-  updateGoshalaDetails(templeId: string, templeData: any): Observable<any> {
-    const updateUrl = `${URL}goshala/${templeId}`;  // Assuming the temple ID is passed in the URL
-    return this.httpclient.put(updateUrl, templeData);
+  updateGoshalaDetails(goshalaId: string, goshalaData: any): Observable<any> {
+    const updateUrl = `${URL}goshala/${goshalaId}`;  // Assuming the temple ID is passed in the URL
+    return this.httpclient.put(updateUrl, goshalaData);
   }
   
 }

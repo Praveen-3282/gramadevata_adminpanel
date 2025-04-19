@@ -389,9 +389,62 @@ export class EditEventComponent {
     )
   }
 
+  triggerFileInput() {
+    const fileInput = document.getElementById('image_location') as HTMLElement;
+    fileInput.click();
+  }
+
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64StringWithPrefix = reader.result?.toString() || '';
+        const base64String = base64StringWithPrefix.split(',')[1];
+        this.profileImage = base64String;
+        this.updateEventForm.patchValue({
+          image_location: base64String
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onImageError(event: any) {
+    event.target.src = 'assets/profile1.webp'; 
+  }
+
 
   get contactNumber() {
     return this.updateEventForm.get('contact_phone');
   }
+
+  // onSubmit(): void {
+  //   console.log('Submit button clicked');
+  //   if (this.updateEventForm.invalid) {
+  //     console.warn('Form is invalid', this.updateEventForm.errors);
+  //     this.updateEventForm.markAllAsTouched(); // highlight errors
+  //     return;
+  //   }
+  
+  //   const eventId = this.route.snapshot.paramMap.get('id');
+  //   console.log('Goshala ID:', eventId);
+  
+  //   const formValue = this.updateEventForm.getRawValue(); // Get values including disabled fields
+  
+  //   if (eventId && formValue) {
+  //     this.eventService.updateEventDetails(eventId, formValue).subscribe({
+  //       next: (response) => {
+  //         console.log('Temple updated successfully!', response);
+  //       },
+  //       error: (error) => {
+  //         console.error('Error updating temple', error);
+  //       }
+  //     });
+  //   } else {
+  //     console.warn('Temple ID or data is missing');
+  //   }
+  // }
 
 }
