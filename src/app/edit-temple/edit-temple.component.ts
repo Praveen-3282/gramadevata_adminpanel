@@ -57,6 +57,8 @@ export class EditTempleComponent {
   templeMapLocation: string = '';
   InVillage = false;
   village: any;
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
 
 
@@ -119,21 +121,17 @@ export class EditTempleComponent {
       // object_id: [{ value: this.village_id, disabled: true }, Validators.required],
       user: localStorage.getItem('user'),
       templeId :this.route.snapshot.paramMap.get("id"),
-
       temple_official_website: ['', [Validators.pattern('https?://.+')]],
-
       temple_timings: [''],
       temple_area: [''],
       contact_email: [''],
       contact_phone: [''],
       contact_name: [''],
-
-
-      country: [''],         // ✅ Ensure this exists
-  state: [''],           // ✅ Ensure this exists
-  district: [''],        // ✅ Ensure this exists
-  mandal: [''],          // ✅ Ensure this exists
-  object_id: [''],       // ✅ Ensure this exists
+       country: [''],         // ✅ Ensure this exists
+      state: [''],           // ✅ Ensure this exists
+      district: [''],        // ✅ Ensure this exists
+      mandal: [''],          // ✅ Ensure this exists
+      object_id: [''],       // ✅ Ensure this exists
 
     });
 
@@ -483,35 +481,35 @@ onImageError(event: any) {
   event.target.src = 'assets/profile1.webp'; 
 }
 
+  
+
+
+
   onSubmit(): void {
-    console.log('Submit button clicked');
     if (this.updateTempleForm.invalid) {
       this.updateTempleForm.markAllAsTouched();
       return;
     }
-    
-    
-    const templeId = this.route.snapshot.paramMap.get('id');
-    this.templeData = this.updateTempleForm.value; // Get form data
   
-    console.log('Temple ID:', templeId);
-    console.log('Temple Data:', this.templeData);
+    const templeId = this.route.snapshot.paramMap.get('id');
+    this.templeData = this.updateTempleForm.value;
   
     if (templeId && this.templeData) {
       this.templeService.updateTempleDetails(templeId, this.templeData).subscribe({
         next: (response) => {
-          console.log('Temple updated successfully!', response);
+          window.alert('✅ Temple details updated successfully!');
+          
         },
         error: (error) => {
-          console.error('Error updating temple', error);
+          window.alert('❌ Failed to update temple details. Please try again.');
         }
       });
     } else {
-      console.warn('Temple ID or data is missing');
-      // this.updateTempleForm.markAllAsTouched();
-
+      window.alert('⚠️ Temple ID or form data is missing.');
     }
   }
+  
+  
   
 
   getCurrentLocation() {

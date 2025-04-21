@@ -420,31 +420,34 @@ export class EditEventComponent {
     return this.updateEventForm.get('contact_phone');
   }
 
-  // onSubmit(): void {
-  //   console.log('Submit button clicked');
-  //   if (this.updateEventForm.invalid) {
-  //     console.warn('Form is invalid', this.updateEventForm.errors);
-  //     this.updateEventForm.markAllAsTouched(); // highlight errors
-  //     return;
-  //   }
+  onSubmit(): void {
+    console.log('Submit button clicked');
+    if (this.updateEventForm.invalid) {
+      console.warn('Form is invalid', this.updateEventForm.errors);
+      this.updateEventForm.markAllAsTouched(); // highlight errors
+      return;
+    }
   
-  //   const eventId = this.route.snapshot.paramMap.get('id');
-  //   console.log('Goshala ID:', eventId);
+    const eventId = this.route.snapshot.paramMap.get('id');
+    console.log('Goshala ID:', eventId);
   
-  //   const formValue = this.updateEventForm.getRawValue(); // Get values including disabled fields
+    const formValue = this.updateEventForm.getRawValue(); // Get values including disabled fields
   
-  //   if (eventId && formValue) {
-  //     this.eventService.updateEventDetails(eventId, formValue).subscribe({
-  //       next: (response) => {
-  //         console.log('Temple updated successfully!', response);
-  //       },
-  //       error: (error) => {
-  //         console.error('Error updating temple', error);
-  //       }
-  //     });
-  //   } else {
-  //     console.warn('Temple ID or data is missing');
-  //   }
-  // }
+    if (eventId && formValue) {
+      this.eventService.updateEventDetails(eventId, formValue).subscribe({
+        next: (response) => {
+          console.log('Temple updated successfully!', response);
+          window.alert('✅ Event details updated successfully!');
+        },
+        error: (error) => {
+          console.error('Error updating temple', error);
+          window.alert('❌ Failed to update event details. Please try again.');
+        }
+      });
+    } else {
+      console.warn('Temple ID or data is missing');
+      window.alert('⚠️ Event ID or form data is missing.');
+    }
+  }
 
 }

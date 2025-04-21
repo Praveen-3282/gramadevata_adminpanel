@@ -106,10 +106,10 @@ export class EditGoshalaComponent {
     })
 
       if (this.village_id != null) {
-        // Enable object_id before setting its value
+        
         this.updateGoshalaForm.get('object_id')?.enable();
 
-        // Strictly set the value using setValue
+        
         try {
           this.updateGoshalaForm.get('object_id')?.setValue(this.village_id);
           console.log(this.updateGoshalaForm.get('object_id')?.value, "Updated object_id value");
@@ -371,14 +371,17 @@ private resetFormFields(fields: string[]) {
     if (goshalaId && formValue) {
       this.goshalaService.updateGoshalaDetails(goshalaId, formValue).subscribe({
         next: (response) => {
-          console.log('Temple updated successfully!', response);
+          console.log('Goshala updated successfully!', response);
+          window.alert('✅ Goshala details updated successfully!');
         },
         error: (error) => {
           console.error('Error updating temple', error);
+          window.alert('❌ Failed to update Goshala details. Please try again.');
         }
       });
     } else {
-      console.warn('Temple ID or data is missing');
+      console.warn('Goshala ID or data is missing');
+      window.alert('⚠️ Goshala ID or form data is missing.');
     }
   }
   
