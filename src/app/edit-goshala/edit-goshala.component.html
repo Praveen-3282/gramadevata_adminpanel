@@ -146,12 +146,25 @@
   
   
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
               <div class="form-group">
                 <label for="address">Total Address *</label>
                 <textarea class="form-control" id="address" formControlName="address" placeholder="Total Address" rows="2"></textarea>
                 <div *ngIf="updateGoshalaForm.get('address')?.invalid && (updateGoshalaForm.get('address')?.dirty || updateGoshalaForm.get('address')?.touched)" class="text-danger">
                   Address is required
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status" formControlName="status">
+                  <option value="ACTIVE">ACTIVE</option>
+                  <option value="INACTIVE">INACTIVE</option>
+                </select>
+                <div *ngIf="updateGoshalaForm.get('status')?.invalid && (updateGoshalaForm.get('status')?.dirty || updateGoshalaForm.get('status')?.touched)" class="text-danger">
+                  Please select an option
                 </div>
               </div>
             </div>

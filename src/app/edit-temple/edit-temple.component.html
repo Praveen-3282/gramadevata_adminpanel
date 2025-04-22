@@ -43,6 +43,8 @@
             </div>
           </div>
         </div>
+
+        
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -79,6 +81,77 @@
             </div>
           </div>
         </div>
+
+
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="contact_name">Contact Name </label>
+              <input type="text" class="form-control" id="contact_name" formControlName="contact_name" placeholder="Enter the Contact Name">
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="contact_email">Contact Email </label>
+              <input type="text" class="form-control" id="contact_email" formControlName="contact_email" placeholder="Enter the Contact Email">
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="contact_phone">Contact Number </label>
+              <input type="number" class="form-control" id="contact_phone" formControlName="contact_phone" placeholder="Enter the Contact Number">
+
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="temple_official_website">Temple Official Website</label>
+              <input type="url" class="form-control"
+                     id="temple_official_website"
+                     formControlName="temple_official_website"
+                     placeholder="Enter the Temple Official Website">
+                     
+              <p style="font-size: 13px;">Provide the correct URL (e.g., http://example.com)</p>
+            
+              <div *ngIf="updateTempleForm.get('temple_official_website')?.invalid && updateTempleForm.get('temple_official_website')?.touched" style="color: red; font-size: 13px;">
+                Please enter a valid URL. Example: http://example.com
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-md-4"> 
+            <div class="form-group">
+              <label for="temple_area">Temple Area</label>
+              <input type="text" class="form-control" id="temple_area" formControlName="temple_area" placeholder="Enter the Temple Area">
+
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="animal_sacrifice_status">Temple Timings</label>
+              <input type="time" class="form-control" id="temple_area" formControlName="temple_timings" placeholder="Enter the Temple Timings">
+
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -165,17 +238,6 @@
           </div>
         </div>
         
-        
-        
-        
-
-
-
-
-
-
-
-
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -186,6 +248,20 @@
               </div>
             </div>
           </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select class="form-control" id="status" formControlName="status">
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
+              </select>
+              <div *ngIf="updateTempleForm.get('status')?.invalid && (updateTempleForm.get('status')?.dirty || updateTempleForm.get('status')?.touched)" class="text-danger">
+                Please select an option
+              </div>
+            </div>
+          </div>
+          
         </div>
 
 

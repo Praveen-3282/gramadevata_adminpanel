@@ -72,9 +72,7 @@ export class EditTempleComponent {
 
   ) {
 
-    // const nav = this.router.getCurrentNavigation();
-    // this.templeData = nav?.extras?.state?.['temple'];
-    // console.log("temple edit data", this.templeData);
+    
   }
 
 
@@ -85,19 +83,13 @@ export class EditTempleComponent {
     if (templeId) {
       this.getTempleDetails(templeId);
     }
-    // if (this.templeData) {
-    //   this.updateTempleForm.patchValue(this.templeData); 
-    //   console.log("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",this.updateTempleForm)// ✅ This will work now
-    // }
+    
     
     this.fetchallCategorys();
     this.fetchAllPriority();
     this.village_id = history.state.village_id || null;
     console.log(this.village_id, "this.village_id");
-    // const nav = this.router.getCurrentNavigation();
-    // //  this.templeData = nav?.extras?.state?.temple;
-    // this.templeData = nav?.extras?.state?.['temple'];
-    // console.log("temple edit data",this.templeData)
+    
 
     this.updateTempleForm = this.fb.group({
       name: ['', Validators.required],
@@ -114,11 +106,7 @@ export class EditTempleComponent {
       image_location: ['', Validators.required],
       category: ['', Validators.required],
       priority: ['', Validators.required],
-      // country: ['', Validators.required],
-      // state: [{ value: '', disabled: true }, Validators.required],
-      // district: [{ value: '', disabled: true }, Validators.required],
-      // mandal: [{ value: '', disabled: true }, Validators.required],
-      // object_id: [{ value: this.village_id, disabled: true }, Validators.required],
+      
       user: localStorage.getItem('user'),
       templeId :this.route.snapshot.paramMap.get("id"),
       temple_official_website: ['', [Validators.pattern('https?://.+')]],
@@ -283,60 +271,6 @@ private resetFormFields(fields: string[]) {
   
   }
 
-//   getTempleDetails(temple:string) {
-
-//     this.templeService.updatetemple(temple).subscribe((response: any) => {
-//       const res = response[0];
-    
-//       this.updateTempleForm = this.fb.group({
-//         name: res.name,
-//         temple_official_website: res.temple_official_website,
-//         temple_timings: res.temple_timings,
-//         image_location: res.image_location,
-//         status: res.status,
-//         desc: res.desc,
-//         contact_email: res.contact_email,
-//         contact_phone: res.contact_phone,
-//         contact_name: res.contact_name,
-//         address: res.address,
-//         temple_map_location: res.temple_map_location,
-//         diety: res.diety,
-//         is_navagraha_established: res.is_navagraha_established,
-//         is_destroyed: res.is_destroyed,
-//         animal_sacrifice_status: res.animal_sacrifice_status,
-//         construction_year: res.construction_year,
-//         // category: res.category?._id,
-//         category: res.category,
-//         // priority: res.priority?._id,
-//         priority: res.priority,
-//         style: res.style,
-//         // mandal: res.object_id?.block?.name,
-//         mandal: res.object_id?.block?.name ,
-//         district: res.object_id?.block?.district?.name,
-//         state: res.object_id?.block?.district?.state?.name,
-//         country: res.object_id?.block?.district?.state?.country?.name,        
-//         object_id: res.object_id?.name,
-
-//       });
-
-//      this.image_location = response[0].image_location;
-//      if (this.image_location) {
-//        this.convertToBase64(this.image_location)
-//          .then(base64 => {
-//            this.profileImage = base64;
-//            this.updateTempleForm.patchValue({
-//             image_location: base64
-//            });
-//          })
-//          .catch(error => {
-//            console.error("Error converting to base64:", error);
-//          });
-//      }
-     
-//    });
-//  }
-  
-
   getTempleDetails(templeId: string) {
     this.templeService.updatetemple(templeId).subscribe((response: any) => {
       const res = response[0];
@@ -346,6 +280,7 @@ private resetFormFields(fields: string[]) {
         temple_timings: res.temple_timings,
         image_location: res.image_location,
         status: res.status,
+        temple_area: res.temple_area,
         desc: res.desc,
         contact_email: res.contact_email,
         contact_phone: res.contact_phone,
@@ -360,37 +295,12 @@ private resetFormFields(fields: string[]) {
         category: res.category,
         priority: res.priority,
         style: res.style,
-        // mandal: res.object_id?.block?._id.name,
-        // district: res.object_id?.block?.district?.name,
-        // state: res.object_id?.block?.district?.state?.name,
-        // country: res.object_id?.block?.district?.state?.country?.name,        
-        // object_id: res.object_id?._id,
-
-
         mandal: res.object_id?.block,
         district: res.object_id?.block,
           object_id: res.object_id,
         state: res.object_id?.block?.district?.state?.state_id,
         country: res.object_id?.block?.district?.state?.country?.name || null,
       
-        // state: res.object_id?.block?.district?.state?.state_name, 
-        // district: res.object_id?.block?.district?.name || null,
-        // mandal: res.object_id?.block?.name|| null,
-        // object_id: res.object_id?.name || null
-        // country: res.object_id?.block?.district?.state?.country?.name || null,
-      
-        // state: res.object_id?.block?.district?.state?.state_name, 
-        // district: res.object_id?.block?.district?.name || null,
-        // mandal: res.object_id?.block?.name|| null,
-        // object_id: res.object_id?.name || null
-
-
-        // country: res[0].object_id?.block?.district?.state?.country?.name || null,
-        // state: res[0].object_id?.block?.district?.state?.name || null,
-        // district: res[0].object_id?.block?.district?.name || null,
-        // mandal: res[0].object_id?.block?.name || null,
-        // object_id: res.object_id?.name || null
-       
       });
   
       this.image_location = res.image_location;
@@ -407,25 +317,25 @@ private resetFormFields(fields: string[]) {
           });
       }
   
-      if (res.object_id?.block?.district?.state?.country?._id) {
-        this.updateTempleForm.get('country')?.setValue(res.object_id?.block?.district?.state?.country?.name);
-      }
+      // if (res.object_id?.block?.district?.state?.country?._id) {
+      //   this.updateTempleForm.get('country')?.setValue(res.object_id?.block?.district?.state?.country?.name);
+      // }
   
-      if (res.object_id?.block?.district?.state?._id) {
-        this.updateTempleForm.get('state')?.setValue(res.object_id?.block?.district?.state?.name );
-      }
+      // if (res.object_id?.block?.district?.state?._id) {
+      //   this.updateTempleForm.get('state')?.setValue(res.object_id?.block?.district?.state?.name );
+      // }
   
-      if (res.object_id?.block?.district?._id) {
-        this.updateTempleForm.get('district')?.setValue(res.object_id?.block?.district?.name);
-      }
+      // if (res.object_id?.block?.district?._id) {
+      //   this.updateTempleForm.get('district')?.setValue(res.object_id?.block?.district?.name);
+      // }
   
-      if (res.object_id?.block?._id) {
-        this.updateTempleForm.get('mandal')?.setValue(res.object_id?.block?._id.name);
-      }
+      // if (res.object_id?.block?._id) {
+      //   this.updateTempleForm.get('mandal')?.setValue(res.object_id?.block?._id.name);
+      // }
   
-      if (res.object_id?._id) {
-        this.updateTempleForm.get('object_id')?.setValue(res.object_id?.name);
-      }
+      // if (res.object_id?._id) {
+      //   this.updateTempleForm.get('object_id')?.setValue(res.object_id?.name);
+      // }
     });
   }
   
@@ -472,14 +382,14 @@ onFileChange(event: Event) {
 }
 
 
-triggerFileInput() {
-  const fileInput = document.getElementById('image_location') as HTMLElement;
-  fileInput.click();
-}
+      triggerFileInput() {
+        const fileInput = document.getElementById('image_location') as HTMLElement;
+        fileInput.click();
+      }
 
-onImageError(event: any) {
-  event.target.src = 'assets/profile1.webp'; 
-}
+      onImageError(event: any) {
+        event.target.src = 'assets/profile1.webp'; 
+      }
 
   
 
@@ -512,30 +422,30 @@ onImageError(event: any) {
   
   
 
-  getCurrentLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          this.updateTempleForm.patchValue({
-            temple_map_location: `https://www.google.com/maps?q=${lat},${lng}`,
-          });
-        },
-        (error) => {
-          console.error('Error getting location', error);
-          alert('Unable to retrieve your location. Please try again.');
-        },
-        {
-          enableHighAccuracy: true, 
-          timeout: 10000, 
-          maximumAge: 0,  
+      getCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+              this.updateTempleForm.patchValue({
+                temple_map_location: `https://www.google.com/maps?q=${lat},${lng}`,
+              });
+            },
+            (error) => {
+              console.error('Error getting location', error);
+              alert('Unable to retrieve your location. Please try again.');
+            },
+            {
+              enableHighAccuracy: true, 
+              timeout: 10000, 
+              maximumAge: 0,  
+            }
+          );
+        } else {
+          alert('Geolocation is not supported by this browser.');
         }
-      );
-    } else {
-      alert('Geolocation is not supported by this browser.');
-    }
-  }
+      }
 
   handleBannerFileRemove(file: any): boolean {
     // Remove the file from the list

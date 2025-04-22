@@ -1,14 +1,12 @@
 <div class="container py-4 header-m" translate="no">
     <div class="form-card">
-      <!-- <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
-			type="ball-spin-clockwise">
-		</ngx-spinner> -->
+      
       <form [formGroup]="updateVillageForm" class="p-5">
         <div class="row mt-5">
           <h3 class="section-header-title text-center">Update Village</h3>
         </div>
         <div class="temple-form-heading">
-          <h3>Village details</h3>
+          
           <hr />
           <div class="row">
             
@@ -54,6 +52,20 @@
                   
                   <div *ngIf="updateVillageForm.get('desc')?.errors?.['maxlength']">Description cannot be more than 4500 words</div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select class="form-control" id="status" formControlName="status">
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
+              </select>
+              <div *ngIf="updateVillageForm.get('status')?.invalid && (updateVillageForm.get('status')?.dirty || updateVillageForm.get('status')?.touched)" class="text-danger">
+                Please select an option
               </div>
             </div>
           </div>
@@ -104,31 +116,42 @@
             </div>
           </div>
 
-          <!-- <div class="row">
-            <div class="col-md-4">
-              <label>Banner image *</label>
-              <nz-upload
-                nzListType="picture-card"
-                [(nzFileList)]="bannerFileList"
-                [nzShowButton]="bannerFileList.length < 1"
-                (nzChange)="handleBannerFileChange($event)"
-                [nzAccept]="'image/*'"
-                (nzRemove)="handleBannerFileRemove()">
-                <div>
-                  <i nz-icon nzType="plus"></i>
-                  Upload banner
-                </div>
-              </nz-upload>
-              <div *ngIf="!bannerFileList.length" class="text-danger">
-                Image is required.
+          <div class="profile-pic-container " formControlName="image_location" (click)="triggerFileInput()">
+            
+            <img  
+                 [src]="'data:image/jpg;base64,' + profileImage" 
+                 alt="Profile Picture" 
+                 class="profile-pic"
+                 (error)="onImageError($event)"
+                 />
+        
+      
+      
+            
+            <ng-template #defaultPic>
+              <div class="profile-pic-placeholder">
+                <span class="plus-icon">+</span>
               </div>
+            </ng-template>
+            
+            <div class="overlay">
+              <span class="edit-icon">+</span>
             </div>
-          </div> -->
+          </div> 
+        
+      <input
+            id="image_location"
+            type="file"
+            accept="image/*"
+            (change)="onFileChange($event)"
+            style="display: none;"
+            #fileInput
+          />
 
           
           
           <div class="text-center">
-            <button type="button"  style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+            <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
           </div>
         </div>
       </form>

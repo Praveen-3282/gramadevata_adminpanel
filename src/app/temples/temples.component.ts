@@ -198,25 +198,6 @@ if (storedCategory) {
     imgElement.src = 'assets/profile1.webp';
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////location and categeory tag////////////////
 
   selectedLocationId: any;
@@ -273,7 +254,7 @@ if (storedCategory) {
   loadFilteredTemples() {
     if (this.selectedCategoryId && this.selectedLocationId) {
       console.log(this.selectedCategoryId,this.selectedLocationId,"sdfg")
-        this.templeservice.filterTemple(this.selectedCategoryId, this.selectedLocationId, this.currentPage).subscribe(
+        this.templeservice.filterinactiveemple(this.selectedCategoryId, this.selectedLocationId, this.currentPage).subscribe(
             (response) => {
                 this.globaltemples = [...this.globaltemples, ...response.results];
                 console.log(this.globaltemples, "Filtered Temples with Category and Location");
@@ -284,7 +265,7 @@ if (storedCategory) {
         );
     } else if (this.selectedCategoryId) {
       console.log("sdfg123")
-        this.templeservice.filterTemple(this.selectedCategoryId, '').subscribe(
+        this.templeservice.filterinactiveemple(this.selectedCategoryId, '').subscribe(
             (response) => {
                 this.globaltemples = [...this.globaltemples, ...response.results];
                 console.log(this.globaltemples, "Filtered Temples with Category");
@@ -294,7 +275,7 @@ if (storedCategory) {
             }
         );
     }else if (this.selectedLocationId) {
-      this.templeservice.filterTemple("",this.selectedLocationId, this.currentPage).subscribe(
+      this.templeservice.filterinactiveemple("",this.selectedLocationId, this.currentPage).subscribe(
           (response) => {
               this.globaltemples = [...this.globaltemples, ...response.results];
               console.log(this.globaltemples, "Filtered Temples with Location");

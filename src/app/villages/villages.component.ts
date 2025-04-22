@@ -37,7 +37,7 @@ export class VillagesComponent {
     this.selectedVillage = village;
   }
 
-  navigateToVilage(){
-    this.router.navigate(['edit_village'])
+  navigateToVilage(_id: string){
+    this.router.navigate(['edit_village', _id])
   }
 }

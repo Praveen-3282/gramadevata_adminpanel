@@ -19,6 +19,8 @@ export class TempleService {
   }
 
 
+  
+
   updatetemple(_id:string):Observable<any>{
     return this.httpclient.get(URL+"temple_inactive_get/_id/"+ _id)
   }
@@ -29,7 +31,9 @@ export class TempleService {
   }
 
   filterTemple(categoryId:string, locationId: string, page: number = 1): Observable<any>{
+    console.log('abcdefghrt')
     return this.httpclient.get(`${URL}locationByTemples/`,{
+      
       params: {
         category: categoryId,
         input_value: locationId,
@@ -43,6 +47,8 @@ export class TempleService {
     return this.httpclient.put(updateUrl, templeData);
   }
   
+
+
   
 
   GetAllCountries():Observable<any>{
@@ -85,7 +91,15 @@ export class TempleService {
   }
   
 
-
+  filterinactiveemple(categoryId:string, locationId: string, page: number = 1): Observable<any>{
+    return this.httpclient.get(`${URL}InactivelocationByTemples`,{
+      params: {
+        category: categoryId,
+        input_value: locationId,
+        page: page.toString(),
+      }
+    })
+  }
 
 
   
