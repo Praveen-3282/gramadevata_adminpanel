@@ -96,7 +96,15 @@
                 <p><strong>Address:</strong> {{ selectedEvent.address }}</p>
                 <p><strong>Description:</strong> {{ selectedEvent.desc }}</p>
                 <!-- Add more event details here as needed -->
-                <button class="btn btn-secondary mt-2" (click)="navigateeditevent(selectedEvent._id)">Edit</button>
+                <!-- <button class="btn btn-secondary mt-2" (click)="navigateeditevent(selectedEvent._id)">Edit</button> -->
+
+                <div class="text-center">
+                  <button (click)="navigateeditevent(selectedEvent._id)"
+                    class="btn"
+                    style="border: 1px solid rgb(238, 141, 51); background-color: rgb(238, 141, 51); border-radius: 25px; color: black; width: 130px; height: 50px; font-size: 18px;">
+                    Edit
+                  </button>
+                </div>
               </div>
             </div>
           </div>

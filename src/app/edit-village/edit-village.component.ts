@@ -232,11 +232,12 @@ export class EditVillageComponent {
           this.villageservice.updateTempleDetails(villageId, this.villageData).subscribe({
             next: (response) => {
               console.log('Update successful:', response);
-              // Optionally show success toast or redirect
+              window.alert('✅ Temple details updated successfully!');
             },
             error: (error) => {
               console.error('Update failed:', error);
-              // Optionally show error toast
+              window.alert('❌ Failed to update temple details. Please try again.');
+              
             }
           });
         } else {
@@ -256,7 +257,11 @@ export class EditVillageComponent {
             image_location: res.image_location,
             desc: res.desc,
             name: res.name,
-            type: res.type
+            type: res.type,
+            country: res.block?.district?.state?.country?.countryid|| null,
+            state: res.block?.district?.state?.stateid || null,
+            district: res.block?.district?.districtid || null,
+            block: res.block?.id || null,
           });
 
           this.image_location = res.image_location;

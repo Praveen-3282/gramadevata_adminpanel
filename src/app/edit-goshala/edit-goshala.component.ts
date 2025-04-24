@@ -246,47 +246,131 @@ private resetFormFields(fields: string[]) {
 
   }
 
-  getGoshalaDetails(goshala:string) {
+  // getGoshalaDetails(goshala:string) {
 
-    this.goshalaService.Editbygoshalagetresponse(goshala).subscribe((response:any) => {
-     this. updateGoshalaForm .patchValue({
-      name: response.name,
+  //   this.goshalaService.Editbygoshalagetresponse(goshala).subscribe((response:any) => {
+  //    this. updateGoshalaForm .patchValue({
+  //     name: response.name,
       
-      image_location:response.image_location,
-      status: response.status,
-      desc: response.desc,
+  //     image_location:response.image_location,
+  //     status: response.status,
+  //     desc: response.desc,
 
-      contact_phone:response.contact_phone,
-      contact_name:response.contact_name,
-      address: response.address,
-      map_location:response.map_location,
+  //     contact_phone:response.contact_phone,
+  //     contact_name:response.contact_name,
+  //     address: response.address,
+  //     map_location:response.map_location,
 
-      category:response.category,
-      object_id:response.object_id,
-      mandal:response.mandal,
-      district:response.district,
-      state:response.state,
-      country:response.country,
-      reg_num: response.reg_num
+  //     category:response.category,
+  //     object_id:response.object_id,
+  //     mandal:response.mandal,
+  //     district:response.district,
+  //     state:response.state,
+  //     country:response.country, 
+  //     reg_num: response.reg_num,
+      
 
-     }) ;
+  //    }) ;
 
-     this.image_location = response.image_location;
-     if (this.image_location) {
-       this.convertToBase64(this.image_location)
-         .then(base64 => {
-           this.profileImage = base64;
-           this.updateGoshalaForm.patchValue({
-             image_location: base64
-           });
-         })
-         .catch(error => {
-           console.error("Error converting to base64:", error);
-         });
-     }
+  //    this.image_location = response.image_location;
+  //    if (this.image_location) {
+  //      this.convertToBase64(this.image_location)
+  //        .then(base64 => {
+  //          this.profileImage = base64;
+  //          this.updateGoshalaForm.patchValue({
+  //            image_location: base64
+  //          });
+  //        })
+  //        .catch(error => {
+  //          console.error("Error converting to base64:", error);
+  //        });
+  //    }
+  //   });
+  // }
+
+
+
+  getGoshalaDetails(goshalaId: string) {
+    this.goshalaService.Editbygoshalagetresponse(goshalaId).subscribe((response: any) => {
+      const res = response;
+  
+      // Patch basic goshala fields
+      this.updateGoshalaForm.patchValue({
+        name: res.name,
+        image_location: res.image_location,
+        status: res.status,
+        desc: res.desc,
+        contact_phone: res.contact_phone,
+        contact_name: res.contact_name,
+        address: res.address,
+        map_location: res.map_location,
+        category: res.category,
+        reg_num: res.reg_num,
+        object_id: res.object_id?._id || null,
+      });
+  
+      // 🌍 Store the location hierarchy
+      const countryId = res.object_id?.block?.district?.state?.country?.country_id || null;
+      const stateId = res.object_id?.block?.district?.state?.state_id || null;
+      const districtId = res.object_id?.block?.district?.district_id || null;
+      const blockId = res.object_id?.block?.block_id || null;
+      const objectId = res.object_id?._id || null;
+  
+      // 🌐 Begin chain-loading dropdowns and patch as you go
+      if (countryId) {
+        this.templeService.getbyStates(countryId).subscribe((states: any) => {
+          this.templeStateOptions = states.map((s: any) => ({
+            label: s.name,
+            value: s._id
+          }));
+          this.templeStateOptions.sort((a, b) => a.label.localeCompare(b.label));
+          this.updateGoshalaForm.patchValue({ country: countryId });
+  
+          if (stateId) {
+            this.templeService.getdistricts(stateId).subscribe((districts: any) => {
+              this.templeDistrictOptions = districts.map((d: any) => ({
+                label: d.name,
+                value: d._id
+              }));
+              this.templeDistrictOptions.sort((a, b) => a.label.localeCompare(b.label));
+              this.updateGoshalaForm.patchValue({ state: stateId });
+  
+              if (districtId) {
+                this.templeService.getblocks(districtId).subscribe((mandals: any) => {
+                  this.templeMandalOptions = mandals.map((m: any) => ({
+                    label: m.name,
+                    value: m._id
+                  }));
+                  this.templeMandalOptions.sort((a, b) => a.label.localeCompare(b.label));
+                  this.updateGoshalaForm.patchValue({
+                    district: districtId,
+                    mandal: blockId,
+                    object_id: objectId
+                  });
+                });
+              }
+            });
+          }
+        });
+      }
+  
+      // 📷 Convert and patch image
+      this.image_location = res.image_location;
+      if (this.image_location) {
+        this.convertToBase64(this.image_location)
+          .then(base64 => {
+            this.profileImage = base64;
+            this.updateGoshalaForm.patchValue({
+              image_location: base64
+            });
+          })
+          .catch(error => {
+            console.error("Error converting to base64:", error);
+          });
+      }
     });
   }
-
+  
   profileImage: string | ArrayBuffer | null = null;
   image_location: any;
 

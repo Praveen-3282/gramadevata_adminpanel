@@ -67,10 +67,12 @@ export class TempleService {
   
  
   getdistricts(_id:string):Observable<any>{
+    console.log("districtttttttttt")
     return this.httpclient.get(URL+"district?state="+_id)
   }
 
   getblocks(_id:string):Observable<any>{
+    console.log("blockkkkkkkkkkk")
     return this.httpclient.get(URL+"block?district_id="+_id)
   }
   

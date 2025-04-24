@@ -40,6 +40,10 @@ export class EditEventComponent {
       InVillage = false;
       minDate: string ="";
       bannerFileList: NzUploadFile[] = [];
+      countryID:any[]=[];
+      formGroup: any;
+      userId:any;
+
 
 
     constructor( private fb: FormBuilder, private templeService: TempleService, private eventService: EventService, private route: ActivatedRoute,
@@ -73,7 +77,8 @@ export class EditEventComponent {
       object_id: [{ value: '', disabled: true }, [Validators.required]],
       user:localStorage.getItem('user'),
       status: ['INACTIVE'],
-      map_location:['', Validators.required]
+      map_location:['', Validators.required],
+      
   });
 
 
@@ -169,6 +174,7 @@ export class EditEventComponent {
   this.updateEventForm.get('district')?.valueChanges.subscribe(districtId => {
     this.resetFormFields(['mandal', 'object_id']);
     if (districtId) {
+      
       this.templeService.getblocks(districtId).subscribe(
         (res) => {
           this.eventMandalOptions = res.map((mandal: any) => ({
@@ -206,6 +212,9 @@ export class EditEventComponent {
  }
 
 
+
+
+
  private resetFormFields(fields: string[]) {
   fields.forEach(field => {
     this.updateEventForm.get(field)?.reset();
@@ -214,54 +223,150 @@ export class EditEventComponent {
 
   }
 
+// getEventDetails(eventId: string) {
+//   this.eventService.updateevent(eventId).subscribe((response: any) => {
+//     const res = response[0];
+
+//     // Update the form values without reinitializing the form group
+//     this.updateEventForm.patchValue({
+//       name: res.name,
+//       start_date: res.start_date,
+//       end_date: res.end_date,
+//       start_time: res.start_time,
+//       end_time: res.end_time,
+//       image_location: res.image_location,
+//       status: res.status,
+//       desc: res.desc,
+//       contact_email: res.contact_email,
+//       contact_phone: res.contact_phone,
+//       contact_name: res.contact_name,
+//       address: res.address,
+//       category: res.category,
+//       map_location: res.map_location,
+//       style: res.style,
+//       priority: res.priority,
+
+//       country: res.country || '',  
+//       state: res.state || '',
+//       district: res.district || '',
+//       mandal: res.mandal || '',
+//       object_id: res.object_id || ''
+//     });
+
+//     // Handle the image conversion
+//     this.image_location = res.image_location;
+//     if (this.image_location) {
+//       this.convertToBase64(this.image_location)
+//         .then(base64 => {
+//           this.profileImage = base64;
+//           this.updateEventForm.patchValue({
+//             image_location: base64
+//           });
+//         })
+//         .catch(error => {
+//           console.error("Error converting to base64:", error);
+//         });
+//     }
+
+//   }, (err) => {
+//     console.log(err);
+//   });
+// }
 
 
-  getEventDetails(temple:string) {
 
-    this.eventService.updateevent(temple).subscribe((response: any) => {
-      const res = response[0];
-    
-      this.updateEventForm = this.fb.group({
-        name: res.name,
-        start_date: res. start_date,
-        end_date: res.end_date,
-        start_time: res.start_time,
-        end_time: res.end_time,
-        image_location: res.image_location,
-        status: res.status,
-        desc: res.desc,
-        contact_email: res.contact_email,
-        contact_phone: res.contact_phone,
-        contact_name: res.contact_name,
-        address: res.address,
-        category: res.category,
-        map_location: res.map_location,
-        // object_id: res.object_id._id,  
-        // mandal: res.object_id.block?.block_id, 
-        // district: res.object_id.block?.district?.district_id,
-        // state_id: res.object_id.block?.district?.state_id?.state_id,
-        // country: res.object_id.block?.district?.state?.country?.contry_id,
-    
-        style: res.style,
-        priority: res.priority
+getEventDetails(eventId: string) {
+  this.eventService.updateevent(eventId).subscribe((response: any) => {
+    const res = response[0];
+
+    // Patch basic event fields
+    this.updateEventForm.patchValue({
+      name: res.name,
+      start_date: res.start_date,
+      end_date: res.end_date,
+      start_time: res.start_time,
+      end_time: res.end_time,
+      image_location: res.image_location,
+      status: res.status,
+      desc: res.desc,
+      contact_email: res.contact_email,
+      contact_phone: res.contact_phone,
+      contact_name: res.contact_name,
+      address: res.address,
+      category: res.category,
+      map_location: res.map_location,
+      style: res.style,
+      priority: res.priority,
+      object_id: res.object_id || ''
+    });
+
+    // 🌍 Extract location hierarchy
+    const countryId = res.object_id?.block?.district?.state?.country?.country_id || null;
+      const stateId = res.object_id?.block?.district?.state?.state_id || null;
+      const districtId = res.object_id?.block?.district?.district_id || null;
+      const blockId = res.object_id?.block?.block_id || null;
+      const objectId = res.object_id?._id || null;
+
+    // 🌐 Begin chain-loading dropdowns and patching values
+    if (countryId) {
+      this.templeService.getbyStates(countryId).subscribe((states: any) => {
+        this.eventStateOptions = states.map((s: any) => ({
+          label: s.name,
+          value: s._id
+        }));
+        this.eventStateOptions.sort((a, b) => a.label.localeCompare(b.label));
+        this.updateEventForm.patchValue({ country: countryId });
+
+        if (stateId) {
+          this.templeService.getdistricts(stateId).subscribe((districts: any) => {
+            this.eventDistrictOptions = districts.map((d: any) => ({
+              label: d.name,
+              value: d._id
+            }));
+            this.eventDistrictOptions.sort((a, b) => a.label.localeCompare(b.label));
+            this.updateEventForm.patchValue({ state: stateId });
+
+            if (districtId) {
+              this.templeService.getblocks(districtId).subscribe((mandals: any) => {
+                this.eventMandalOptions = mandals.map((m: any) => ({
+                  label: m.name,
+                  value: m._id
+                }));
+                this.eventMandalOptions.sort((a, b) => a.label.localeCompare(b.label));
+                this.updateEventForm.patchValue({
+                  district: districtId,
+                  mandal: blockId,
+                  object_id: objectId
+                });
+              });
+            }
+          });
+        }
       });
+    }
 
-     this.image_location = response[0].image_location;
-     if (this.image_location) {
-       this.convertToBase64(this.image_location)
-         .then(base64 => {
-           this.profileImage = base64;
-           this.updateEventForm.patchValue({
+    // 📷 Convert and patch image
+    this.image_location = res.image_location;
+    if (this.image_location) {
+      this.convertToBase64(this.image_location)
+        .then(base64 => {
+          this.profileImage = base64;
+          this.updateEventForm.patchValue({
             image_location: base64
-           });
-         })
-         .catch(error => {
-           console.error("Error converting to base64:", error);
-         });
-     }
-     
-   });
- }
+          });
+        })
+        .catch(error => {
+          console.error("Error converting to base64:", error);
+        });
+    }
+
+  }, (err) => {
+    console.error(err);
+  });
+}
+
+
+
  profileImage: string | ArrayBuffer | null = null;
  image_location: any;
  
@@ -311,18 +416,7 @@ export class EditEventComponent {
 
   
 
-  InVillageId(): void{
-
-    this.village_id = history.state.village_id || null;
   
-    if (this.village_id !== null) {
-      this.InVillage = true;
-      
-    }else {
-      this.InVillage = false
-      console.log("fales")
-    }
-   }
 
    updateMinDate() {
     const startDate = this.updateEventForm.get('start_date')?.value;
@@ -370,7 +464,7 @@ export class EditEventComponent {
         callback(base64String);
     };
     reader.readAsDataURL(file);
-  }
+  } 
 
 
   fetchallaCategories():void{

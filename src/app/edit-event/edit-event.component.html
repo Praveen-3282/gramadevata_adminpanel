@@ -218,102 +218,7 @@
                    </div>
                 </div>
 
-
-                <!-- <div class="row"  *ngIf="!InVillage">
-                  <div class="col-md-4">
-                    <nz-form-item>
-                      <nz-form-control nzErrorTip="Please select a country">
-                        <label for="country">Country *</label>
-                        <nz-select
-                          formControlName="country"
-                          nzPlaceHolder="Select country"
-                          [nzShowSearch]="true" nzNotFoundContent="No data found">
-                          <nz-option 
-                            *ngFor="let option of eventCountryOptions" 
-                            [nzValue]="option.value" 
-                            [nzLabel]="option.label">
-                          </nz-option>
-                        </nz-select>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
-                
-                  <div class="col-md-4">
-                    <nz-form-item>
-                      <nz-form-control nzErrorTip="Please select a state">
-                        <label for="state">State *</label>
-                        <nz-select
-                          formControlName="state"
-                          nzPlaceHolder="Select state"
-                          [nzShowSearch]="true" nzNotFoundContent="No data found">
-                          <nz-option
-                            *ngFor="let option of eventStateOptions"
-                            [nzValue]="option.value"
-                            [nzLabel]="option.label">
-                          </nz-option>
-                        </nz-select>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
-                
-                  <div class="col-md-4">
-                    <nz-form-item>
-                      <nz-form-control nzErrorTip="Please select a district">
-                        <label for="district">District *</label>
-                        <nz-select
-                          formControlName="district"
-                          nzPlaceHolder="Select district"
-                          [nzShowSearch]="true" nzNotFoundContent="No data found">
-                          <nz-option
-                            *ngFor="let option of eventDistrictOptions"
-                            [nzValue]="option.value"
-                            [nzLabel]="option.label">
-                          </nz-option>
-                        </nz-select>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
-                
-                  <div class="col-md-4">
-                    <nz-form-item>
-                      <nz-form-control nzErrorTip="Please select a mandal">
-                        <label for="mandal">Mandal *</label>
-                        <nz-select
-                          formControlName="mandal"
-                          nzPlaceHolder="Select mandal"
-                          [nzShowSearch]="true" nzNotFoundContent="No data found"
-                          [nzDisabled]="!updateEventForm.get('district')?.value">
-                          <nz-option
-                            *ngFor="let option of eventMandalOptions"
-                            [nzValue]="option.value"
-                            [nzLabel]="option.label">
-                          </nz-option>
-                        </nz-select>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
-                
-                  <div class="col-md-4">
-                    <nz-form-item>
-                      <nz-form-control nzErrorTip="Please select a village">
-                        <label for="village">Village *</label>
-                        <nz-select
-                          formControlName="object_id"
-                          nzPlaceHolder="Select village"
-                          [nzShowSearch]="true" nzNotFoundContent="No data found">
-                          <nz-option
-                            *ngFor="let option of eventVillageOptions"
-                            [nzValue]="option.value"
-                            [nzLabel]="option.label">
-                          </nz-option>
-                        </nz-select>
-                      </nz-form-control>
-                    </nz-form-item>
-                  </div>
-                </div> -->
-                
-                   
-                <div class="row"  >
+                <!-- <div class="row"  >
                   <div class="col-md-4">
                     <nz-form-item>
                       <nz-form-control nzErrorTip="Please select a country">
@@ -364,7 +269,64 @@
                       </nz-form-control>
                     </nz-form-item>
                   </div>
+                </div> -->
+
+
+                <div class="row"  *ngIf="!InVillage">
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please select a country">
+                        <label for="country">Country*</label>
+                        <nz-select formControlName="country" nzPlaceHolder="Select country" [nzShowSearch]="true"  nzNotFoundContent="No data found">
+                          <nz-option *ngFor="let option of eventCountryOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="State is required">
+                        <label for="state">State*</label>
+                        <nz-select formControlName="state" nzPlaceHolder="Select state" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option *ngFor="let option of eventStateOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="District is required">
+                        <label for="district">District*</label>
+                        <nz-select formControlName="district" nzPlaceHolder="Select district" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option *ngFor="let option of eventDistrictOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Mandal is required">
+                        <label for="mandal">Mandal*</label>
+                        <nz-select formControlName="mandal" nzPlaceHolder="Select mandal" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option *ngFor="let option of eventMandalOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Village is required">
+                        <label for="village">Village*</label>
+                        <nz-select formControlName="object_id" nzPlaceHolder="Select village" [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option *ngFor="let option of eventVillageOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
                 </div>
+
+
+
 
                     <div class="profile-pic-container " formControlName="image_location" (click)="triggerFileInput()">
             
