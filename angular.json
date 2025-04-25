@@ -30,7 +30,9 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
 
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
-              "node_modules/ng-zorro-antd/style/index.min.css"
+              "node_modules/ng-zorro-antd/style/index.min.css",
+              "node_modules/ngx-spinner/animations/ball-spin-clockwise.css"
+
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"

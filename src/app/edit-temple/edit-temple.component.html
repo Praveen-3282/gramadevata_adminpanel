@@ -4,6 +4,20 @@
 
 <div class="container py-4 header-m mt-5 " translate="no">
   <div class="form-card">
+    <!-- <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+			type="ball-spin-clockwise">
+		</ngx-spinner> -->
+    <!-- Can go in app.component.html for global spinner -->
+    <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#ffffff"
+    type="ball-scale-multiple"
+    [fullScreen]="true">
+  </ngx-spinner>
+    
+
+
 
     <form [formGroup]="updateTempleForm" class="p-5">
       <div class="row mt-5">

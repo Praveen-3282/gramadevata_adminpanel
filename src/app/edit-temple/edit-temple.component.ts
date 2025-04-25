@@ -14,6 +14,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { Route, Router } from '@angular/router';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
+import { NotificationHelper } from '../notification';
+
 
 
 @Component({
@@ -25,6 +28,7 @@ import { Route, Router } from '@angular/router';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    NgxSpinnerModule
   ],
   templateUrl: './edit-temple.component.html',
   styleUrl: './edit-temple.component.css'
@@ -67,8 +71,10 @@ export class EditTempleComponent {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private formBuilder: FormBuilder,
-    private router: Router
-    
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private notificationHelper: NotificationHelper,
+
 
   ) {
 
@@ -482,9 +488,39 @@ onFileChange(event: Event) {
 
 
 
-  onSubmit(): void {
+  // onSubmit(): void {
+  //   this.spinner.show();
+
+  //   if (this.updateTempleForm.invalid) {
+  //     this.updateTempleForm.markAllAsTouched();
+  //     return;
+  //   }
+  
+  //   const templeId = this.route.snapshot.paramMap.get('id');
+  //   this.templeData = this.updateTempleForm.value;
+  
+  //   if (templeId && this.templeData) {
+  //     this.templeService.updateTempleDetails(templeId, this.templeData).subscribe({
+  //       next: (response) => {
+  //         window.alert('✅ Temple details updated successfully!');
+          
+  //       },
+  //       error: (error) => {
+  //         window.alert('❌ Failed to update temple details. Please try again.');
+  //       }
+  //     });
+  //   } else {
+  //     window.alert('⚠️ Temple ID or form data is missing.');
+  //   }
+  // }
+  
+
+  onSubmit(): void {     
+    this.spinner.show();
+  
     if (this.updateTempleForm.invalid) {
       this.updateTempleForm.markAllAsTouched();
+      this.spinner.hide(); // Hide spinner if form is invalid
       return;
     }
   
@@ -494,11 +530,12 @@ onFileChange(event: Event) {
     if (templeId && this.templeData) {
       this.templeService.updateTempleDetails(templeId, this.templeData).subscribe({
         next: (response) => {
-          window.alert('✅ Temple details updated successfully!');
-          
+          this.notificationHelper.showSuccessNotification('Temple update successfully', '');
+          this.spinner.hide(); // Hide spinner on success
         },
         error: (error) => {
-          window.alert('❌ Failed to update temple details. Please try again.');
+          this.notificationHelper.showErrorNotification('Temple update Failed');
+          this.spinner.hide(); // Hide spinner on error
         }
       });
     } else {
